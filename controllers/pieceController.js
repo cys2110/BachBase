@@ -60,7 +60,7 @@ const getPieceByInstrument = async(req, res) => {
         const instrumentId = await Instrument.find({instrument: instrument})
         const pieces = await Piece.find({instrumentation: instrumentId[0]._id}).populate({path: 'composer', select: ['first_name', 'last_name']}).populate({path: 'instrumentation', select: 'instrument'})
         const sorted = pieces.toSorted((a, b) => {
-            return a.piece.localCompare(b.piece)
+            return a.piece.localeCompare(b.piece)
         })
         if (pieces) {
             res.json(sorted)

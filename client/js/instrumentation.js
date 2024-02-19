@@ -17,7 +17,9 @@ const details = async() => {
             const instrumentList = document.createElement('ul')
             for (let j=0; j<piecesCall.data.length; j++) {
                 const pieces = instrumentList.appendChild(document.createElement('li'))
-                pieces.innerHTML = piecesCall.data[j].piece
+                const pieceLink = pieces.appendChild(document.createElement('a'))
+                pieceLink.href = `../html/piece.html?id=${piecesCall.data[j]._id}`
+                pieceLink.innerHTML = piecesCall.data[j].piece
             }
             instrument.after(instrumentList)
         }

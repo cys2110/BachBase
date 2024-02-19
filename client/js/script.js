@@ -159,8 +159,45 @@ const removeChildNodes = (details) => {
     }
 }
 
-search.addEventListener('keydown', () => {
+search.addEventListener('input', () => {
     setTimeout(() => {
         searchResults()
     }, delay)
+})
+
+// instrument checkbox search - adapted from ChatGPT
+const searchInstruments = document.getElementById('instrument-search')
+const instruments = document.querySelectorAll('#instrumentation input[type="checkbox"]')
+
+searchInstruments.addEventListener('input', function() {
+    const search = searchInstruments.value.trim().toLowerCase();
+    instruments.forEach((checkbox) => {
+        const label = checkbox.parentElement.textContent.toLowerCase();
+        if (search === '' || label.includes(search)) {
+            checkbox.parentElement.style.display = 'block';
+        } else {
+            checkbox.parentElement.style.display = 'none'
+        }
+    })
+})
+
+// genre checkbox search
+const searchGenres = document.getElementById('genre-search')
+const genres = document.querySelectorAll('#genre-fieldset input[type="checkbox"]')
+
+searchGenres.addEventListener('input', function() {
+    const search = searchGenres.value.trim().toLowerCase();
+    genres.forEach(function(checkbox) {
+        const label = checkbox.nextElementSibling.textContent.toLowerCase();
+        if (search === '' || label.includes(search)) {
+            checkbox.style.display = 'inline-block';
+            checkbox.nextElementSibling.style.display = 'inline-block'; // Show the label
+        } else if (label.includes(search)) {
+            checkbox.style.display = 'inline-block';
+            checkbox.nextElementSibling.style.disply = 'inline-block'
+        } else {
+            checkbox.style.display = 'none';
+            checkbox.nextElementSibling.style.display = 'none'
+        }
+    })
 })

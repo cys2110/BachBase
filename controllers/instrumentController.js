@@ -15,7 +15,7 @@ const getInstrumentByType = async(req, res) => {
         const regex = new RegExp(type, 'i')
         const instruments = await Instrument.find({type: {$regex: regex}}).populate({path: 'pieces', select: 'piece'})
         const sorted = instruments.toSorted((a, b) => {
-            return a.instrument.localeCompare(b.instrument)
+            return b.instrument.localeCompare(a.instrument)
         })
         if (sorted) {
             res.json(sorted)

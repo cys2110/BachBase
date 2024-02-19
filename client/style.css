@@ -47,10 +47,30 @@ body {
     justify-content: space-around;
 }
 
+#add-section div {
+    width: 100%;
+}
+
 h1, h3 {
     text-align: center;
 }
 
 .form-field {
-    display: block
+    display: inline-block
+}
+
+label {
+    display: block;
+}
+
+#instrumentation {
+    height: 100px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+#genre-fieldset {
+    height: 100px;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
