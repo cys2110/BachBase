@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css" >
+    <script src="https://kit.fontawesome.com/146bb2ac16.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.jpeg">
+    <script defer src="../js/piece.js"></script>
+    <title id="title"></title>
+</head>
+<body>
+    <div>
+        <a href="../html/index.html">Home</a>
+        <a href="../html/composers.html">Composers</a>
+        <a href="../html/instrumentation.html">Instrumentation</a>
+    </div>
+    <div>
+        <h1 id="page"></h1>
+        <h4 id="composer"></h4>
+        <h4 id="opus"></h4>
+        <figure>
+            <iframe id="performance" width="420" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <figcaption id="performer"></figcaption>
+        </figure>
+    </div>
+    <div>
+        <input id="search-bar" type="text" placeholder="Search by composer or piece">
+        <dl id="details"></dl>
+        <a id="music" href="" target="_blank"><i class="fa-solid fa-file-pdf"></i></a>
+    </div>
+    <div>
+        <form>
+            <label for="piece">Piece Name:</label>
+            <input type="text" id="piece">
+            <label for="alias">Alternate Name:</label>
+            <input type="text" id="alias">
+            <label for="opus">Opus:</label>
+            <input type="text" id="opus">
+            <label for="year">Year Composed:</label>
+            <input type="number" id="year">
+            <label for="key">Key:</label>
+            <input type="text" id="key">
+            <fieldset id="instrumentation">
+                <legend>Instrumentation:</legend>
+                <input type="checkbox" id="chorus" value="65d24b64bf953c2ccfd6bc10" class="checkbox">
+                <label for="chorus">Chorus</label>
+                <input type="checkbox" id="orchestra" value="65d247ec2bbb1b840327e399" class="checkbox">
+                <label for="orchestra">Orchestra</label>
+                <input type="checkbox" id="organ" value="65d264c5d120f4f438816001" class="checkbox">
+                <label for="organ">Organ</label>
+                <input type="checkbox" id="piano" value="65cf8fd629417a2b556af8ed" class="checkbox">
+                <label for="piano">Piano</label>
+                <input type="checkbox" id="voice" value="65cfd6402e85662b5d98d67b" class="checkbox">
+                <label for="voice">Voice</label>
+            </fieldset>
+            <fieldset id="genre-fieldset">
+                <legend>Genre:</legend>
+                <input type="checkbox" id="Nocturne" value="Nocturne" class="genre">
+                <label for="Nocturne">Nocturne</label>
+                <input type="checkbox" id="Opera" value="Opera" class="genre">
+                <label for="Opera">Opera</label>
+                <input type="checkbox" id="Polka" value="Polka" class="genre">
+                <label for="Polka">Polka</label>
+                <input type="checkbox" id="Scherzo" value="Scherzo" class="genre">
+                <label for="Scherzo">Scherzo</label>
+                <input type="checkbox" id="Song" value="Song" class="genre">
+                <label for="Song">Song</label>
+                <input type="checkbox" id="Tarantella" value="Tarantella" class="genre">
+                <label for="Tarantella">Tarantella</label>
+                <input type="checkbox" id="Waltz" value="Waltz" class="genre">
+                <label for="Waltz">Waltz</label>
+            </fieldset>
+            <label for="style">Style:</label>
+            <select id="style" name="style">
+                <option></option>
+                <option value="ancient">Ancient</option>
+                <option value="medieval">Medieval</option>
+                <option value="renaissance">Renaissance</option> 
+                <option value="baroque">Baroque</option>
+                <option value="classical">Classical</option>
+                <option value="romantic">Romantic</option>
+                <option value="modernism">Modernism</option>
+                <option value="contemporary">Contemporary</option>
+            </select>
+            <fieldset>
+                <legend>Composer:</legend>
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname">
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname">
+            </fieldset>
+            <label for="performance">Performance Link:</label>
+            <input type="url" id="performance">
+            <label for="performer">Performers:</label>
+            <input type="text" id="performer">
+            <label for="sheet-music">Sheet Music link:</label>
+            <input type="url" id="sheet-music">
+            <button type="button" id="add">Add piece</button>
+            <button type="button" id="edit" value="">Edit piece</button>
+        </form>
+    </div>
+
+</body>
+</html>

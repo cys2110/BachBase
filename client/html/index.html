@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css" >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="../html/music.png">
+    <script defer src="../js/script.js"></script>
+    <title>BachBase</title>
+</head>
+<body>
+    <h1>BachBase</h1>
+    <p>Welcome to BachBase - a website designed to make it easier to find good quality classical music sheet music. If you have good quality sheet music (meaning readable and in modern notation), but you don't find it here, feel free to add the composer and/piece using the forms below. If you find that there is incorrect information, feel free to edit the composer or piece on the relevant page. Please note that most of the sheet music is linked to <a href="https://imslp.org/">IMSLP</a>, a non-profit sharing the world's public domain music. If you are using this website, please consider going to their website and donating to the project.</p>
+    <input id="search-bar" type="text" placeholder="Search by composer or piece">
+    <div class="dropdown">
+        <div class="dropdown-content" id="dropdown-content"></div>
+    </div>
+    <div id="search-sections">
+        <div id="time">
+            <a href="../html/time-period.html">Time Periods</a>
+        </div>
+        <div id="composers">
+            <a href="../html/composers.html">Composers</a>
+        </div>
+        <div id="instrumentation">
+            <a href="../html/instrumentation.html">Instrumentation</a>
+        </div>
+    </div>
+    <div id="add-section">
+        <div id="composer-section">
+            <h3>Add a composer</h3>
+            <form>
+                <div class="form-field">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" required>
+                </div>
+                <div class="form-field">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" required>
+                </div>
+                <div class="form-field">
+                    <label for="time">Time period</label>
+                    <select id="time">
+                        <option value="ancient">Ancient</option>
+                        <option value="medieval">Medieval</option>
+                        <option value="renaissance">Renaissance</option>
+                        <option value="baroque">Baroque</option>
+                        <option value="classical">Classical</option>
+                        <option value="romantic">Romantic</option>
+                        <option value="modernism">Modernism</option>
+                        <option value="contemporary">Contemporary</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="born">Born:</label>
+                <input type="text" id="born">
+                </div>
+                <div class="form-field">
+                    <label for="died">Died:</label>
+                <input type="text" id="died">
+                </div>
+                <div class="form-field">
+                    <label for="nationality">Nationality:</label>
+                <input type="text" id="nationality">
+                </div>
+                <div class="form-field">
+                    <label for="biography">Biography:</label>
+                    <textarea name="biography" id="biography" rows="4" cols="30"></textarea>
+                </div>
+                <div class="form-field">
+                    <label for="bio-link">Link to Wikipedia Page:</label>
+                    <input type="text" id="bio-link">
+                </div>
+                <div class="form-field">
+                    <label for="picture">Link to picture:</label>
+                    <input type="text" id="picture">
+                </div>
+                
+                <button type="button" id="add-composer">Add composer</button>
+            </form>
+        </div>
+        <div id="piece-section">
+            <h3>Add a piece</h3>
+            <form>
+                <div class="form-field">
+                    <label for="piece">Piece Name:</label>
+                    <input type="text" id="piece">
+                </div>
+                <div class="form-field">
+                    <label for="alias">Alternate Name:</label>
+                    <input type="text" id="alias">
+                </div>
+                <div class="form-field">
+                    <label for="opus">Opus:</label>
+                    <input type="text" id="opus">
+                </div>
+                <div class="form-field">
+                    <label for="year">Year Composed:</label>
+                    <input type="number" id="year">
+                </div>
+                <div class="form-field">
+                    <label for="key">Key:</label>
+                    <input type="text" id="key">
+                </div>
+                <div class="form-field">
+                    <fieldset id="instrumentation">
+                        <legend>Instrumentation:</legend>
+                        <input type="checkbox" id="chorus" value="65d24b64bf953c2ccfd6bc10" class="checkbox">
+                        <label for="chorus">Chorus</label>
+                        <input type="checkbox" id="orchestra" value="65d247ec2bbb1b840327e399" class="checkbox">
+                        <label for="orchestra">Orchestra</label>
+                        <input type="checkbox" id="organ" value="65d264c5d120f4f438816001" class="checkbox">
+                        <label for="organ">Organ</label>
+                        <input type="checkbox" id="piano" value="65cf8fd629417a2b556af8ed" class="checkbox">
+                        <label for="piano">Piano</label>
+                        <input type="checkbox" id="voice" value="65cfd6402e85662b5d98d67b" class="checkbox">
+                        <label for="voice">Voice</label>
+                    </fieldset>
+                </div>
+                <div class="form-field">
+                    <fieldset id="genre-fieldset">
+                        <legend>Genre:</legend>
+                        <input type="checkbox" id="Adagietto" value="Adagietto" class="genre">
+                        <label for="Adagietto">Adagietto</label>
+                        <input type="checkbox" id="Adagio" value="Adagio" class="genre">
+                        <label for="Adagio">Adagio</label>
+                        <input type="checkbox" id="Agitato" value="Agitato" class="genre">
+                        <label for="Agitato">Agitato</label>
+                        <input type="checkbox" id="Agnus Dei" value="Agnus Dei" class="genre">
+                        <label for="Agnus Dei">Agnus Dei</label>
+                        <input type="checkbox" id="Air" value="Air" class="genre">
+                        <label for="Air">Air</label>
+                        <input type="checkbox" id="Allegretto" value="Allegretto" class="genre">
+                        <label for="Allegretto">Allegretto</label>
+                        <input type="checkbox" id="Allegro" value="Allegro" class="genre">
+                        <label for="Allegro">Allegro</label>
+                        <input type="checkbox" id="Allemande" value="Allemane" class="genre">
+                        <label for="Allemande">Allemande</label>
+                        <input type="checkbox" id="Andante" value="Andante" class="genre">
+                        <label for="Andante">Andante</label>
+                        <input type="checkbox" id="Nocturne" value="Nocturne" class="genre">
+                        <label for="Nocturne">Nocturne</label>
+                        <input type="checkbox" id="Opera" value="Opera" class="genre">
+                        <label for="Opera">Opera</label>
+                        <input type="checkbox" id="Polka" value="Polka" class="genre">
+                        <label for="Polka">Polka</label>
+                        <input type="checkbox" id="Scherzo" value="Scherzo" class="genre">
+                        <label for="Scherzo">Scherzo</label>
+                        <input type="checkbox" id="Song" value="Song" class="genre">
+                        <label for="Song">Song</label>
+                        <input type="checkbox" id="Tarantella" value="Tarantella" class="genre">
+                        <label for="Tarantella">Tarantella</label>
+                        <input type="checkbox" id="Waltz" value="Waltz" class="genre">
+                        <label for="Waltz">Waltz</label>
+                    </fieldset>
+                </div>
+                <div class="form-field">
+                    <label for="style">Style:</label>
+                    <select id="style" name="style">
+                        <option></option>
+                        <option value="Ancient">Ancient</option>
+                        <option value="Medieval">Medieval</option>
+                        <option value="Renaissance">Renaissance</option> 
+                        <option value="Baroque">Baroque</option>
+                        <option value="Classical">Classical</option>
+                        <option value="Romantic">Romantic</option>
+                        <option value="Modernism">Modernism</option>
+                        <option value="Contemporary">Contemporary</option>
+                        <option value="Jazz">Jazz</option>
+                        <option value="Non-western classical">Non-western Classical</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Traditional (folk) style">Traditional (folk)</option>
+                        <option value="Traditional">Traditional</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <fieldset>
+                        <legend>Composer:</legend>
+                        <label for="fname">First Name:</label>
+                        <input type="text" id="fname">
+                        <label for="lname">Last Name:</label>
+                        <input type="text" id="lname">
+                    </fieldset>
+                </div>
+                <div class="form-field">
+                    <label for="performance">Performance Link:</label>
+                    <input type="text" id="performance">
+                </div>
+                <div class="form-field">
+                    <label for="performer">Performers:</label>
+                    <input type="text" id="performer">
+                </div>
+                <div class="form-field">
+                    <label for="sheet-music">Sheet Music link:</label>
+                    <input type="url" id="sheet-music">
+                </div>
+                <button type="button" id="add-piece">Add piece</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
