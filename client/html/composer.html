@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css" >
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/favicon.jpeg">
+    <script defer src="../js/composer.js"></script>
+    <title id="title"></title>
+</head>
+<body>
+    <div>
+        <a href="../html/index.html">Home</a>
+        <a href="../html/composers.html">Composers</a>
+        <a href="../html/instrumentation.html">Instrumentation</a>
+    </div>
+    <div>
+        <h1 id="page"></h1>
+        <h4 id="dates"></h4>
+        <img id="picture" src="">
+    </div>
+    <div>
+        <input id="search-bar" type="text" placeholder="Search by composer or piece">
+        <dl id="details"></dl>
+    </div>
+    <div>
+        <form>
+            <div class="form-field">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" required>
+            </div>
+            <div class="form-field">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" required>
+            </div>
+            <div class="form-field">
+                <label for="time">Time period</label>
+                <select id="time">
+                    <option></option>
+                    <option value="medieval">Medieval</option>
+                    <option value="renaissance">Renaissance</option>
+                    <option value="baroque">Baroque</option>
+                    <option value="classical">Classical</option>
+                    <option value="romantic">Romantic</option>
+                    <option value="modernism">Modernism</option>
+                    <option value="contemporary">Contemporary</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label for="born">Born:</label>
+            <input type="text" id="born">
+            </div>
+            <div class="form-field">
+                <label for="died">Died:</label>
+            <input type="text" id="died">
+            </div>
+            <div class="form-field">
+                <label for="nationality">Nationality:</label>
+            <input type="text" id="nationality">
+            </div>
+            <div class="form-field">
+                <label for="biography">Biography:</label>
+                <textarea name="biography" id="biography" rows="4" cols="30"></textarea>
+            </div>
+            <div class="form-field">
+                <label for="bio-link">Link to Wikipedia Page:</label>
+                <input type="text" id="bio-link">
+            </div>
+            <div class="form-field">
+                <label for="picture">Link to picture:</label>
+                <input type="text" id="picture">
+            </div>
+            <button type="button" id="edit" value="">Edit composer</button>
+        </form>
+    </div>
+</body>
+</html>

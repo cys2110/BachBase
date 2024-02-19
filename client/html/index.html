@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css" >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="../html/music.png">
+    <script defer src="../js/script.js"></script>
+    <title>BachBase</title>
+</head>
+<body>
+    <h1>BachBase</h1>
+    <p>Welcome to BachBase - a website designed to make it easier to find good quality classical music sheet music. If you have good quality sheet music (meaning readable and in modern notation), but you don't find it here, feel free to add the composer and/piece using the forms below. If you find that there is incorrect information, feel free to edit the composer or piece on the relevant page. Please note that most of the sheet music is linked to <a href="https://imslp.org/">IMSLP</a>, a non-profit sharing the world's public domain music. If you are using this website, please consider going to their website and donating to the project.</p>
+    <input id="search-bar" type="text" placeholder="Search by composer or piece">
+    <div class="dropdown">
+        <div class="dropdown-content" id="dropdown-content"></div>
+    </div>
+    <div id="search-sections">
+        <div id="time-period">
+            <a href="../html/time-period.html">Time Periods</a>
+        </div>
+        <div id="composers">
+            <a href="../html/composers.html">Composers</a>
+        </div>
+        <div id="instrumentation">
+            <a href="../html/instrumentation.html">Instrumentation</a>
+        </div>
+    </div>
+    <div id="add-section">
+        <div id="composer-section">
+            <h3>Add a composer</h3>
+            <form>
+                <div class="form-field">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" required>
+                </div>
+                <div class="form-field">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" required>
+                </div>
+                <div class="form-field">
+                    <label for="time">Time period</label>
+                    <select id="time">
+                        <option></option>
+                        <option value="medieval">Medieval</option>
+                        <option value="renaissance">Renaissance</option>
+                        <option value="baroque">Baroque</option>
+                        <option value="classical">Classical</option>
+                        <option value="romantic">Romantic</option>
+                        <option value="modernism">Modernism</option>
+                        <option value="contemporary">Contemporary</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label for="born">Born:</label>
+                <input type="text" id="born">
+                </div>
+                <div class="form-field">
+                    <label for="died">Died:</label>
+                <input type="text" id="died">
+                </div>
+                <div class="form-field">
+                    <label for="nationality">Nationality:</label>
+                <input type="text" id="nationality">
+                </div>
+                <div class="form-field">
+                    <label for="biography">Biography:</label>
+                    <textarea name="biography" id="biography" rows="4" cols="30"></textarea>
+                </div>
+                <div class="form-field">
+                    <label for="bio-link">Link to Wikipedia Page:</label>
+                    <input type="text" id="bio-link">
+                </div>
+                <div class="form-field">
+                    <label for="picture">Link to picture:</label>
+                    <input type="text" id="picture">
+                </div>
+                
+                <button type="button" id="add-composer">Add composer</button>
+            </form>
+        </div>
+        <div id="piece-section">
+            <h3>Add a piece</h3>
+            <form>
+                <div class="form-field">
+                    <label for="piece">Piece Name:</label>
+                    <input type="text" id="piece">
+                </div>
+                <div class="form-field">
+                    <label for="alias">Alternate Name:</label>
+                    <input type="text" id="alias">
+                </div>
+                <div class="form-field">
+                    <label for="opus">Opus:</label>
+                    <input type="text" id="opus">
+                </div>
+                <div class="form-field">
+                    <label for="year">Year Composed:</label>
+                    <input type="number" id="year">
+                </div>
+                <div class="form-field">
+                    <label for="key">Key:</label>
+                    <input type="text" id="key">
+                </div>
+                <div class="form-field">
+                    <fieldset id="instrumentation">
+                        <input type="text" id="instrument-search" placeholder="Search instruments">
+                        <legend>Instrumentation:</legend>
+                        <label for="accordion"><input type="checkbox" id="accordion" value="65d29db77e1cfb83b59c4352" class="checkbox">Accordion</label>
+                        <label for="alto clarinet"><input type="checkbox" id="alto clarinet" value="65d29db77e1cfb83b59c4354" class="checkbox">Alto clarinet</label>
+                        <label for="alto flute"><input type="checkbox" id="alto flute" value="65d29db77e1cfb83b59c4356" class="checkbox">Alto flute</label>
+                        <label for="alto saxophone"><input type="checkbox" id="alto saxophone" value="65d29e873cc10b8fc785b04f" class="checkbox">Alto saxophone</label>
+                        <label for="bagpipe"><input type="checkbox" id="bagpipe" value="65d29e5693a341c933eb56df" class="checkbox">Bagpipe</label>
+                        <label for="balalaika"><input type="checkbox" id="balalaika" value="65d29e5693a341c933eb56e2" class="checkbox">Balalaika</label>
+                        <label for="bandurria"><input type="checkbox" id="bandurria" value="65d29e5693a341c933eb56e4" class="checkbox">Bandurria</label>
+                        <label for="banjo"><input type="checkbox" id="banjo" value="65d29e5793a341c933eb56e6" class="checkbox">Banjo</label>
+                        <label for="baritone saxophone"><input type="checkbox" id="baritone saxophone" value="65d29e5793a341c933eb56e8" class="checkbox">Baritone Saxophone</label>
+                        <label for="baryton"><input type="checkbox" id="baryton" value="65d29e5793a341c933eb56ea" class="checkbox">Baryton</label>
+                        <label for="bass"><input type="checkbox" id="bass" value="65d29db77e1cfb83b59c434c" class="checkbox">Bass</label>
+                        <label for="bass accordion"><input type="checkbox" id="bass accordion" value="65d29e5793a341c933eb56ec" class="checkbox">Bass accordion</label>
+                        <label for="bass clarinet"><input type="checkbox" id="bass clarinet" value="65d29e5793a341c933eb56ee" class="checkbox">Bass clarinet</label>
+                        <label for="bass flute"><input type="checkbox" id="bass flute" value="65d29e5793a341c933eb56f0" class="checkbox">Bass flute</label>
+                        <label for="bass guitar"><input type="checkbox" id="bass guitar" value="65d29e5793a341c933eb56f2" class="checkbox">Bass guitar</label>
+                        <label for="bass oboe"><input type="checkbox" id="bass oboe" value="65d29e873cc10b8fc785b052" class="checkbox">Bass oboe</label>
+                        <label for="basset clarinet"><input type="checkbox" id="basset clarinet" value="65d2a28a6da04b11e44a8636" class="checkbox">Basset clarinet</label>
+                        <label for="basset horn"><input type="checkbox" id="basset horn" value="65d2a28b6da04b11e44a8639" class="checkbox">Basset horn</label>
+                        <label for="bassoon"><input type="checkbox" id="bassoon" value="65d2a28b6da04b11e44a863b" class="checkbox">Bassoon</label>
+                        <label for="brass ensemble"><input type="checkbox" id="brass ensemble" value="65d2a28b6da04b11e44a863f" class="checkbox">Brass ensemble</label>
+                        <label for="brass band"><input type="checkbox" id="brass band" value="65d2a28b6da04b11e44a8641" class="checkbox">Brass band</label>
+                        <label for="bugle"><input type="checkbox" id="bugle" value="65d2a28b6da04b11e44a8643" class="checkbox">Bugle</label>
+                        <label for="cavaquinho"><input type="checkbox" id="cavaquinho" value="65d2a3c01a7780ef7a4d2a3d" class="checkbox">Cavaquinho</label>
+                        <label for="celesta"><input type="checkbox" id="celesta" value="65d2a3c01a7780ef7a4d2a40" class="checkbox">Celesta</label>
+                        <label for="cello"><input type="checkbox" id="cello" value="65d29db77e1cfb83b59c434a" class="checkbox">Cello</label>
+                        <label for="chalumeau"><input type="checkbox" id="chalumeau" value="65d2a3c01a7780ef7a4d2a42" class="checkbox">Chalumeau</label>
+                        <label for="chorus"><input type="checkbox" id="chorus" value="65d24b64bf953c2ccfd6bc10" class="checkbox">Chorus</label>
+                        <label for="cimbalom"><input type="checkbox" id="cimbalom" value="65d2a3c01a7780ef7a4d2a44" class="checkbox">Cimbalom</label>
+                        <label for="cittern"><input type="checkbox" id="cittern" value="65d2a3c11a7780ef7a4d2a46" class="checkbox">Cittern</label>
+                        <label for="clarinet"><input type="checkbox" id="clarinet" value="65d2a3c11a7780ef7a4d2a48" class="checkbox">Clarinet</label>
+                        <label for="clavichord"><input type="checkbox" id="clavichord" value="65d29db77e1cfb83b59c434e" class="checkbox">Clavichord</label>
+                        <label for="concertina"><input type="checkbox" id="concertina" value="65d2a3c11a7780ef7a4d2a4a" class="checkbox">Concertina</label>
+                        <label for="contrabass clarinet"><input type="checkbox" id="contrabass clarinet" value="65d2a3c11a7780ef7a4d2a4c" class="checkbox">Contrabass clarinet</label>
+                        <label for="contrabassoon"><input type="checkbox" id="contrabassoon" value="65d2a3c11a7780ef7a4d2a4e" class="checkbox">Contrabassoon</label>
+                        <label for="contrabass tuba"><input type="checkbox" id="contrabass tuba" value="65d2a3c11a7780ef7a4d2a50" class="checkbox">Contrabass tuba</label>
+                        <label for="cornett"><input type="checkbox" id="cornett" value="65d2a3c11a7780ef7a4d2a52" class="checkbox">Cornett</label>
+                        <label for="cornet"><input type="checkbox" id="cornet" value="65d2a3c11a7780ef7a4d2a54" class="checkbox">Cornet</label>
+                        <label for="crumhorn"><input type="checkbox" id="crumhorn" value="65d2a3c11a7780ef7a4d2a56" class="checkbox">Crumhorn</label>
+                        <label for="domra"><input type="checkbox" id="domra" value="65d2a91c248c99d02dba7ec7" class="checkbox">Domra</label>
+                        <label for="double bass"><input type="checkbox" id="double bass" value="65d2a91e248c99d02dba7eca" class="checkbox">Double bass</label>
+                        <label for="duduk"><input type="checkbox" id="duduk" value="65d2a91e248c99d02dba7ecc" class="checkbox">Duduk</label>
+                        <label for="dulcian"><input type="checkbox" id="dulcian" value="65d2a91e248c99d02dba7ece" class="checkbox">Dulcian</label>
+                        <label for="dulcimer"><input type="checkbox" id="dulcimer" value="65d2a91e248c99d02dba7ed0" class="checkbox">Dulcimer</label>
+                        <label for="electric guitar"><input type="checkbox" id="electric guitar" value="65d2a98c7ffd7cfc59448245" class="checkbox">Electric guitar</label>
+                        <label for="electric piano"><input type="checkbox" id="electric piano" value="65d2a98c7ffd7cfc59448248" class="checkbox">Electric piano</label>
+                        <label for="electric violin"><input type="checkbox" id="electric violin" value="65d2a98c7ffd7cfc5944824a" class="checkbox">Electric violin</label>
+                        <label for="english horn"><input type="checkbox" id="english horn" value="65d2a98c7ffd7cfc5944824c" class="checkbox">English horn</label>
+                        <label for="euphonium"><input type="checkbox" id="euphonium" value="65d2a98d7ffd7cfc5944824e" class="checkbox">Euphonium</label>
+                        <label for="fife"><input type="checkbox" id="fife" value="65d2a9d68bf3474717025bf1" class="checkbox">Fife</label>
+                        <label for="flageolet"><input type="checkbox" id="flageolet" value="65d2a9d78bf3474717025bf4" class="checkbox">Flageolet</label>
+                        <label for="flugelhorn"><input type="checkbox" id="flugelhorn" value="65d2a9d78bf3474717025bf6" class="checkbox">Flugelhorn</label>
+                        <label for="flute"><input type="checkbox" id="flute" value="65d2a9d78bf3474717025bf8" class="checkbox">Flute</label>
+                        <label for="flute damore"><input type="checkbox" id="flute damore" value="65d2a9d78bf3474717025bfa" class="checkbox">Flute damore</label>
+                        <label for="glass harmonica"><input type="checkbox" id="glass harmonica" value="65d2aa5506049c8d7b10d3ce" class="checkbox">Glass harmonica</label>
+                        <label for="glockenspiel"><input type="checkbox" id="glockenspiel" value="65d2aa5606049c8d7b10d3d1" class="checkbox">Glockenspiel</label>
+                        <label for="guitalele"><input type="checkbox" id="guitalele" value="65d2aa5606049c8d7b10d3d3" class="checkbox">Guitalele</label>
+                        <label for="guitar"><input type="checkbox" id="guitar" value="65d2aa5606049c8d7b10d3d5" class="checkbox">Guitar</label>
+                        <label for="harmonica"><input type="checkbox" id="harmonica" value="65d2aaa403144b6f651bba6a" class="checkbox">Harmonica</label>
+                        <label for="harmonichord"><input type="checkbox" id="harmonichord" value="65d2aaa503144b6f651bba6d" class="checkbox">Harmonichord</label>
+                        <label for="harp"><input type="checkbox" id="harp" value="65d2aaa503144b6f651bba6f" class="checkbox">Harp</label>
+                        <label for="heckelphone"><input type="checkbox" id="heckelphone" value="65d2aaa503144b6f651bba71" class="checkbox">Heckelphone</label>
+                        <label for="horn"><input type="checkbox" id="horn" value="65d2aaa503144b6f651bba73" class="checkbox">Horn</label>
+                        <label for="kalimba"><input type="checkbox" id="kalimba" value="65d2ab1f3c9b5f58be78de36" class="checkbox">Kalimba</label>
+                        <label for="kantele"><input type="checkbox" id="kantele" value="65d2ab203c9b5f58be78de39" class="checkbox">Kantele</label>
+                        <label for="kemenche"><input type="checkbox" id="kemenche" value="65d2ab203c9b5f58be78de3b" class="checkbox">Kemenche</label>
+                        <label for="koto"><input type="checkbox" id="koto" value="65d2ab203c9b5f58be78de3d" class="checkbox">Koto</label>
+                        <label for="lautenwerck"><input type="checkbox" id="lautenwerck" value="65d2ab3ed822464c27941585" class="checkbox">Lautenwerck</label>
+                        <label for="lute"><input type="checkbox" id="lute" value="65d2ab3fd822464c27941588" class="checkbox">Lute</label>
+                        <label for="lyre"><input type="checkbox" id="lyre" value="65d2ab3fd822464c2794158a" class="checkbox">Lyre</label>
+                        <label for="mandocello"><input type="checkbox" id="mandocello" value="65d2abd40ddbb4d486fb4740" class="checkbox">Mandocello</label>
+                        <label for="mandola"><input type="checkbox" id="mandola" value="65d2abd50ddbb4d486fb4743" class="checkbox">Mandola</label>
+                        <label for="mandolin"><input type="checkbox" id="mandolin" value="65d2abd50ddbb4d486fb4745" class="checkbox">Mandolin</label>
+                        <label for="marimba"><input type="checkbox" id="marimba" value="65d2abd50ddbb4d486fb4747" class="checkbox">Marimba</label>
+                        <label for="melodica"><input type="checkbox" id="melodica" value="65d2abd50ddbb4d486fb4749" class="checkbox">Melodica</label>
+                        <label for="melodion"><input type="checkbox" id="melodion" value="65d2abd50ddbb4d486fb474b" class="checkbox">Melodion</label>
+                        <label for="mirliton"><input type="checkbox" id="mirliton" value="65d2abd50ddbb4d486fb474d" class="checkbox">Mirliton</label>
+                        <label for="musette"><input type="checkbox" id="musette" value="65d2abd50ddbb4d486fb474f" class="checkbox">Musette</label>
+                        <label for="oboe"><input type="checkbox" id="oboe" value="65d2ac45963c689964bec1b2" class="checkbox">Oboe</label>
+                        <label for="oboe damore"><input type="checkbox" id="oboe damore" value="65d2ac47963c689964bec1b5" class="checkbox">Oboe damore</label>
+                        <label for="oboe da caccia"><input type="checkbox" id="oboe da caccia" value="65d2ac47963c689964bec1b7" class="checkbox">Oboe da caccia</label>
+                        <label for="ocarina"><input type="checkbox" id="ocarina" value="65d2ac47963c689964bec1b9" class="checkbox">Ocarina</label>
+                        <label for="ondes"><input type="checkbox" id="ondes" value="65d2ac47963c689964bec1bb" class="checkbox">Ondes</label>
+                        <label for="ophicleide"><input type="checkbox" id="ophicleide" value="65d2ac47963c689964bec1bd" class="checkbox">Ophicleide</label>
+                        <label for="orchestra"><input type="checkbox" id="orchestra" value="65d247ec2bbb1b840327e399" class="checkbox">Orchestra</label>
+                        <label for="orchestral bells"><input type="checkbox" id="orchestral bells" value="65d2a28b6da04b11e44a863d" class="checkbox">Orchestral bells</label>
+                        <label for="organ"><input type="checkbox" id="organ" value="65d264c5d120f4f438816001" class="checkbox">Organ</label>
+                        <label for="oud"><input type="checkbox" id="oud" value="65d2ac48963c689964bec1bf" class="checkbox">Oud</label>
+                        <label for="pan flute"><input type="checkbox" id="pan flute" value="65d2ac854039db491df24f0c" class="checkbox">Pan flute</label>
+                        <label for="pedal piano"><input type="checkbox" id="pedal piano" value="65d2ac864039db491df24f0f" class="checkbox">Pedal piano</label>
+                        <label for="physharmonica"><input type="checkbox" id="physharmonica" value="65d2ac864039db491df24f11" class="checkbox">Physharmonica</label>
+                        <label for="piano"><input type="checkbox" id="piano" value="65cf8fd629417a2b556af8ed" class="checkbox">Piano</label>
+                        <label for="piccolo"><input type="checkbox" id="piccolo" value="65d2ac864039db491df24f13" class="checkbox">Piccolo</label>
+                        <label for="piccolo clarinet"><input type="checkbox" id="piccolo clarinet" value="65d2ac864039db491df24f15" class="checkbox">Piccolo clarinet</label>
+                        <label for="piccolo trumpet"><input type="checkbox" id="piccolo trumpet" value="65d2ac864039db491df24f17" class="checkbox">Piccolo trumpet</label>
+                        <label for="rebec"><input type="checkbox" id="rebec" value="65d2aca43dcad1067e12234f" class="checkbox">Rebec</label>
+                        <label for="recorder"><input type="checkbox" id="recorder" value="65d2aca53dcad1067e122352" class="checkbox">Recorder</label>
+                        <label for="sackbut"><input type="checkbox" id="sackbut" value="65d2aea75b92efc0734af85e" class="checkbox">Sackbut</label>
+                        <label for="sarrusophone"><input type="checkbox" id="sarrusophone" value="65d2aea95b92efc0734af861" class="checkbox">Sarrusophone</label>
+                        <label for="saxhorn"><input type="checkbox" id="saxhorn" value="65d2aea95b92efc0734af863" class="checkbox">Saxhorn</label>
+                        <label for="saxophone"><input type="checkbox" id="saxophone" value="65d2aea95b92efc0734af865" class="checkbox">Saxophone</label>
+                        <label for="serpent"><input type="checkbox" id="serpent" value="65d2aea95b92efc0734af867" class="checkbox">Serpent</label>
+                        <label for="shakuhachi"><input type="checkbox" id="shakuhachi" value="65d2aea95b92efc0734af869" class="checkbox">Shakuhachi</label>
+                        <label for="shamisen"><input type="checkbox" id="shamisen" value="65d2aea95b92efc0734af86b" class="checkbox">Shamisen</label>
+                        <label for="shawm"><input type="checkbox" id="shawm" value="65d2aea95b92efc0734af86d" class="checkbox">Shawm</label>
+                        <label for="sitar"><input type="checkbox" id="sitar" value="65d2aea95b92efc0734af86f" class="checkbox">Sitar</label>
+                        <label for="slide trumpet"><input type="checkbox" id="slide trumpet" value="65d2aea95b92efc0734af871" class="checkbox">Slide trumpet</label>
+                        <label for="sopranino saxophone"><input type="checkbox" id="sopranino saxophone" value="65d2aea95b92efc0734af873" class="checkbox">Sopranino saxophone</label>
+                        <label for="soprano saxophone"><input type="checkbox" id="soprano saxophone" value="65d2aea95b92efc0734af875" class="checkbox">Soprano saxophone</label>
+                        <label for="sousaphone"><input type="checkbox" id="sousaphone" value="65d2aea95b92efc0734af877" class="checkbox">Sousaphone</label>
+                        <label for="string ensemble"><input type="checkbox" id="string ensemble" value="65d2aea95b92efc0734af879" class="checkbox">String ensemble</label>
+                        <label for="string orchestra"><input type="checkbox" id="string orchestra" value="65d29db67e1cfb83b59c4343" class="checkbox">String orchestra</label>
+                        <label for="synthesizer"><input type="checkbox" id="synthesizer" value="65d2aea95b92efc0734af87b" class="checkbox">Synthesizer</label>
+                        <label for="tamburica"><input type="checkbox" id="tamburica" value="65d2af313198cfe50c30cca5" class="checkbox">Tamburica</label>
+                        <label for="tanpura"><input type="checkbox" id="tanpura" value="65d2af323198cfe50c30cca8" class="checkbox">Tanpura</label>
+                        <label for="tenor saxophone"><input type="checkbox" id="tenor saxophone" value="65d2af323198cfe50c30ccaa" class="checkbox">Tenor saxophone</label>
+                        <label for="theremin"><input type="checkbox" id="theremin" value="65d2af323198cfe50c30ccac" class="checkbox">Theremin</label>
+                        <label for="timpani"><input type="checkbox" id="timpani" value="65d2af323198cfe50c30ccae" class="checkbox">Timpani</label>
+                        <label for="toy piano"><input type="checkbox" id="toy piano" value="65d2af323198cfe50c30ccb0" class="checkbox">Toy piano</label>
+                        <label for="tromba marina"><input type="checkbox" id="tromba marina" value="65d2af323198cfe50c30ccb2" class="checkbox">Tromba marina</label>
+                        <label for="trombone"><input type="checkbox" id="trombone" value="65d2af323198cfe50c30ccb4" class="checkbox">Trombone</label>
+                        <label for="trumpet"><input type="checkbox" id="trumpet" value="65d2af323198cfe50c30ccb6" class="checkbox">Trumpet</label>
+                        <label for="tuba"><input type="checkbox" id="tuba" value="65d2af323198cfe50c30ccb8" class="checkbox">Tuba</label>
+                        <label for="ukulele"><input type="checkbox" id="ukulele" value="65d2adb89f9c4fe38d6605a4" class="checkbox">Ukulele</label>
+                        <label for="vibraphone"><input type="checkbox" id="vibraphone" value="65d2ada419c0657e289dd800" class="checkbox">Vibraphone</label>
+                        <label for="vielle"><input type="checkbox" id="vielle" value="65d2ada419c0657e289dd7fe" class="checkbox">Vielle</label>
+                        <label for="vihuela"><input type="checkbox" id="vihuela" value="65d2ada419c0657e289dd7fc" class="checkbox">Vihuela</label>
+                        <label for="viol"><input type="checkbox" id="viol" value="65d2ada419c0657e289dd7fa" class="checkbox">Viol</label>
+                        <label for="viola"><input type="checkbox" id="viola" value="65d29db77e1cfb83b59c4348" class="checkbox">Viola</label>
+                        <label for="viola alta"><input type="checkbox" id="viola alta" value="65d2ada419c0657e289dd7f8" class="checkbox">Viola alta</label>
+                        <label for="viola damore"><input type="checkbox" id="viola damore" value="65d2ada419c0657e289dd7f6" class="checkbox">Viola damore</label>
+                        <label for="viola pomposa"><input type="checkbox" id="viola pomposa" value="65d2ada419c0657e289dd7f4" class="checkbox">Viola pomposa</label>
+                        <label for="viola profonda"><input type="checkbox" id="viola profonda" value="65d2ada419c0657e289dd7f2" class="checkbox">Viola profonda</label>
+                        <label for="violin"><input type="checkbox" id="violin" value="65d29db77e1cfb83b59c4346" class="checkbox">Violin</label>
+                        <label for="violone"><input type="checkbox" id="violone" value="65d2ada319c0657e289dd7f0" class="checkbox">Violone</label>
+                        <label for="violotta"><input type="checkbox" id="violotta" value="65d2ada219c0657e289dd7ed" class="checkbox">Violotta</label>
+                        <label for="voice"><input type="checkbox" id="voice" value="65cfd6402e85662b5d98d67b" class="checkbox">Voice</label>
+                        <label for="vuvuzela"><input type="checkbox" id="vuvuzela" value="65d29db77e1cfb83b59c4350" class="checkbox">Vuvuzela</label>
+                        <label for="wagner tuba"><input type="checkbox" id="wagner tuba" value="65d2acf1e067a79e3c73bce5" class="checkbox">Wagner tuba</label>
+                        <label for="wind band"><input type="checkbox" id="wind band" value="65d2acf2e067a79e3c73bce8" class="checkbox">Wind band</label>
+                        <label for="wind ensemble"><input type="checkbox" id="wind ensemble" value="65d2acf2e067a79e3c73bcea" class="checkbox">Wind ensemble</label>
+                        <label for="xylophone"><input type="checkbox" id="xylophone" value="65d2acd59aa7ff187df56632" class="checkbox">Xylophone</label>
+                        <label for="zheng"><input type="checkbox" id="zheng" value="65d2acc73890e4a2facf69ae" class="checkbox">Zheng</label>
+                        <label for="zither"><input type="checkbox" id="zither" value="65d2acc63890e4a2facf69ab" class="checkbox">Zither</label>
+                    </fieldset>
+                </div>
+                <div class="form-field">
+                    <fieldset id="genre-fieldset">
+                        <legend>Genre:</legend>
+                        <input type="text" id="genre-search" placeholder="Search genres">
+                        <label for="Adagietto"><input type="checkbox" id="Adagietto" value="Adagietto" class="genre">Adagietto</label>
+                        <label for="Adagio"><input type="checkbox" id="Adagio" value="Adagio" class="genre">Adagio</label>
+                        <label for="Agitato"><input type="checkbox" id="Agitato" value="Agitato" class="genre">Agitato</label>
+                        <label for="Agnus Dei"><input type="checkbox" id="Agnus Dei" value="Agnus Dei" class="genre">Agnus Dei</label>
+                        <label for="Air"><input type="checkbox" id="Air" value="Air" class="genre">Air</label>
+                        <label for="Allegretto"><input type="checkbox" id="Allegretto" value="Allegretto" class="genre">Allegretto</label>
+                        <label for="Allegro"><input type="checkbox" id="Allegro" value="Allegro" class="genre">Allegro</label>
+                        <label for="Allemande"><input type="checkbox" id="Allemande" value="Allemane" class="genre">Allemande</label>
+                        <label for="Andante"><input type="checkbox" id="Andante" value="Andante" class="genre">Andante</label>
+                        <label for="Andantino"><input type="checkbox" id="Andantino" value="Andantino" class="genre">Andantino</label>
+                        <label for="Anglaise"><input type="checkbox" id="Anglaise" value="Anglaise" class="genre">Anglaise</label>
+                        <label for="Anthem"><input type="checkbox" id="Anthem" value="Anthem" class="genre">Anthem</label>
+                        <label for="Antiphon"><input type="checkbox" id="Antiphon" value="Antiphon" class="genre">Antiphon</label>
+                        <label for="Arabesque"><input type="checkbox" id="Arabesque" value="Arabesque" class="genre">Arabesque</label>
+                        <label for="Aria"><input type="checkbox" id="Aria" value="Aria" class="genre">Aria</label>
+                        <label for="Arietta"><input type="checkbox" id="Arietta" value="Arietta" class="genre">Arietta</label>
+                        <label for="Arioso"><input type="checkbox" id="Arioso" value="Arioso" class="genre">Arioso</label>
+                        <label for="Aubade"><input type="checkbox" id="Aubade" value="Aubade" class="genre">Aubade</label>
+                        <label for="Autobiographie"><input type="checkbox" id="Autobiographie" value="Autobiographie" class="genre">Autobiographie</label>
+                        <label for="Bagatelle"><input type="checkbox" id="Bagatelle" value="Bagatelle" class="genre">Bagatelle</label>
+                        <label for="Ballad"><input type="checkbox" id="Ballad" value="Ballad" class="genre">Ballad</label>
+                        <label for="Ballade"><input type="checkbox" id="Ballade" value="Ballade" class="genre">Ballade</label>
+                        <label for="Ballata"><input type="checkbox" id="Ballata" value="Ballata" class="genre">Ballata</label>
+                        <label for="Ballet"><input type="checkbox" id="Ballet" value="Ballet" class="genre">Ballet</label>
+                        <label for="Ballett"><input type="checkbox" id="Ballett" value="Ballett" class="genre">Ballett</label>
+                        <label for="Barcarolle"><input type="checkbox" id="Barcarolle" value="Barcarolle" class="genre">Barcarolle</label>
+                        <label for="Beguine"><input type="checkbox" id="Beguine" value="Beguine" class="genre">Beguine</label>
+                        <label for="Benedictus"><input type="checkbox" id="Benedictus" value="Benedictus" class="genre">Benedictus</label>
+                        <label for="Berceuse"><input type="checkbox" id="Berceuse" value="Berceuse" class="genre">Berceuse</label>
+                        <label for="Bicinia"><input type="checkbox" id="Bicinia" value="Bicinia" class="genre">Bicinia</label>
+                        <label for="Biographie"><input type="checkbox" id="Biographie" value="Biographie" class="genre">Biographie</label>
+                        <label for="Blues"><input type="checkbox" id="Blues" value="Blues" class="genre">Blues</label>
+                        <label for="Bolero"><input type="checkbox" id="Bolero" value="Bolero" class="genre">Bolero</label>
+                        <label for="Bourree"><input type="checkbox" id="Bourree" value="Bourree" class="genre">Bourree</label>
+                        <label for="Burlesque"><input type="checkbox" id="Burlesque" value="Burlesque" class="genre">Burlesque</label>
+                        <label for="Cadenza"><input type="checkbox" id="Cadenza" value="Cadenza" class="genre">Cadenza</label>
+                        <label for="Cakewalk"><input type="checkbox" id="Cakewalk" value="Cakewalk" class="genre">Cakewalk</label>
+                        <label for="Canary"><input type="checkbox" id="Canary" value="Canary" class="genre">Canary</label>
+                        <label for="Cancione"><input type="checkbox" id="Cancione" value="Cancione" class="genre">Cancione</label>
+                        <label for="Canon"><input type="checkbox" id="Canon" value="Canon" class="genre">Canon</label>
+                        <label for="Cantabile"><input type="checkbox" id="Cantabile" value="Cantabile" class="genre">Cantabile</label>
+                        <label for="Cantata"><input type="checkbox" id="Cantata" value="Cantata" class="genre">Cantata</label>
+                        <label for="Canticle"><input type="checkbox" id="Canticle" value="Canticle" class="genre">Canticle</label>
+                        <label for="Cantiga"><input type="checkbox" id="Cantiga" value="Cantiga" class="genre">Cantiga</label>
+                        <label for="Cantilena"><input type="checkbox" id="Cantilena" value="Cantilena" class="genre">Cantilena</label>
+                        <label for="Canzona"><input type="checkbox" id="Canzona" value="Canzona" class="genre">Canzona</label>
+                        <label for="Canzone"><input type="checkbox" id="Canzone" value="Canzone" class="genre">Canzone</label>
+                        <label for="Canzonet"><input type="checkbox" id="Canzonet" value="Canzonet" class="genre">Canzonet</label>
+                        <label for="Canzonetta"><input type="checkbox" id="Canzonetta" value="Canzonetta" class="genre">Canzonetta</label>
+                        <label for="Capriccio"><input type="checkbox" id="Capriccio" value="Capriccio" class="genre">Capriccio</label>
+                        <label for="Caprice"><input type="checkbox" id="Caprice" value="Caprice" class="genre">Caprice</label>
+                        <label for="Carmen"><input type="checkbox" id="Carmen" value="Carmen" class="genre">Carmen</label>
+                        <label for="Carol"><input type="checkbox" id="Carol" value="Carol" class="genre">Carol</label>
+                        <label for="Cassation"><input type="checkbox" id="Cassation" value="Cassation" class="genre">Cassation</label>
+                        <label for="Catalog"><input type="checkbox" id="Catalog" value="Catalog" class="genre">Catalog</label>
+                        <label for="Catch"><input type="checkbox" id="Catch" value="Catch" class="genre">Catch</label>
+                        <label for="Cavatina"><input type="checkbox" id="Cavatina" value="Cavatina" class="genre">Cavatina</label>
+                        <label for="Chaconne"><input type="checkbox" id="Chaconne" value="Chaconne" class="genre">Chaconne</label>
+                        <label for="Chanson"><input type="checkbox" id="Chanson" value="Chanson" class="genre">Chanson</label>
+                        <label for="Chant"><input type="checkbox" id="Chant" value="Chant" class="genre">Chant</label>
+                        <label for="Choralbearbeitung"><input type="checkbox" id="Choralbearbeitung" value="Choralbearbeitung" class="genre">Choralbearbeitung</label>
+                        <label for="Chorale"><input type="checkbox" id="Chorale" value="Chorale" class="genre">Chorale</label>
+                        <label for="Chorinho"><input type="checkbox" id="Chorinho" value="Chorinho" class="genre">Chorinho</label>
+                        <label for="Chorus"><input type="checkbox" id="Chorus" value="Chorus" class="genre">Chorus</label>
+                        <label for="Communion"><input type="checkbox" id="Communion" value="Communion" class="genre">Communion</label>
+                        <label for="Concertante"><input type="checkbox" id="Concertante" value="Concertante" class="genre">Concertante</label>
+                        <label for="Concertino"><input type="checkbox" id="Concertino" value="Concertino" class="genre">Concertino</label>
+                        <label for="Conductus"><input type="checkbox" id="Conductus" value="Conductus" class="genre">Conductus</label>
+                        <label for="Conga"><input type="checkbox" id="Conga" value="Conga" class="genre">Conga</label>
+                        <label for="Correspondence"><input type="checkbox" id="Correspondence" value="Correspondence" class="genre">Correspondence</label>
+                        <label for="Cortege"><input type="checkbox" id="Cortege" value="Cortege" class="genre">Cortege</label>
+                        <label for="Courante"><input type="checkbox" id="Courante" value="Courante" class="genre">Courante</label>
+                        <label for="Credo"><input type="checkbox" id="Credo" value="Credo" class="genre">Credo</label>
+                        <label for="Czarda"><input type="checkbox" id="Czarda" value="Czarda" class="genre">Czarda</label>
+                        <label for="Dance"><input type="checkbox" id="Dance" value="Dance" class="genre">Dance</label>
+                        <label for="Danza"><input type="checkbox" id="Danza" value="Danza" class="genre">Danza</label>
+                        <label for="Danzon"><input type="checkbox" id="Danzon" value="Danzon" class="genre">Danzon</label>
+                        <label for="Decet"><input type="checkbox" id="Decet" value="Decet" class="genre">Decet</label>
+                        <label for="Descant"><input type="checkbox" id="Descant" value="Descant" class="genre">Descant</label>
+                        <label for="Dictionary"><input type="checkbox" id="Dictionary" value="Dictionary" class="genre">Dictionary</label>
+                        <label for="Dirge"><input type="checkbox" id="Dirge" value="Dirge" class="genre">Dirge</label>
+                        <label for="Divertimento"><input type="checkbox" id="Divertimento" value="Divertimento" class="genre">Divertimento</label>
+                        <label for="Divertissement"><input type="checkbox" id="Divertissement" value="Divertissement" class="genre">Divertissement</label>
+                        <label for="Division"><input type="checkbox" id="Division" value="Division" class="genre">Division</label>
+                        <label for="Duet"><input type="checkbox" id="Duet" value="Duet" class="genre">Duet</label>
+                        <label for="Duettino"><input type="checkbox" id="Duettino" value="Duettino" class="genre">Duettino</label>
+                        <label for="Dumka"><input type="checkbox" id="Dumka" value="Dumka" class="genre">Dumka</label>
+                        <label for="Eclogue"><input type="checkbox" id="Eclogue" value="Eclogue" class="genre">Eclogue</label>
+                        <label for="Ecossaise"><input type="checkbox" id="Ecossaise" value="Ecossaise" class="genre">Ecossaise</label>
+                        <label for="Elegy"><input type="checkbox" id="Elegy" value="Elegy" class="genre">Elegy</label>
+                        <label for="Epithalamium"><input type="checkbox" id="Epithalamium" value="Epithalamium" class="genre">Epithalamium</label>
+                        <label for="Equale"><input type="checkbox" id="Equale" value="Equale" class="genre">Equale</label>
+                        <label for="Estampie"><input type="checkbox" id="Estampie" value="Estampie" class="genre">Estampie</label>
+                        <label for="Ethnomusicology"><input type="checkbox" id="Ethnomusicology" value="Ethnomusicology" class="genre">Ethnomusicology</label>
+                        <label for="Exercise"><input type="checkbox" id="Exercise" value="Exercise" class="genre">Exercise</label>
+                        <label for="Fancies"><input type="checkbox" id="Fancies" value="Fancies" class="genre">Fancies</label>
+                        <label for="Fandango"><input type="checkbox" id="Fandango" value="Fandango" class="genre">Fandango</label>
+                        <label for="Fanfare"><input type="checkbox" id="Fanfare" value="Fanfare" class="genre">Fanfare</label>
+                        <label for="Fantasia"><input type="checkbox" id="Fantasia" value="Fantasia" class="genre">Fantasia</label>
+                        <label for="Farce"><input type="checkbox" id="Farce" value="Farce" class="genre">Farce</label>
+                        <label for="Finale"><input type="checkbox" id="Finale" value="Finale" class="genre">Finale</label>
+                        <label for="Folksong"><input type="checkbox" id="Folksong" value="Folksong" class="genre">Folksong</label>
+                        <label for="Forlane"><input type="checkbox" id="Forlane" value="Forlane" class="genre">Forlane</label>
+                        <label for="Foxtrot"><input type="checkbox" id="Foxtrot" value="Foxtrot" class="genre">Foxtrot</label>
+                        <label for="Frottola"><input type="checkbox" id="Frottola" value="Frottola" class="genre">Frottola</label>
+                        <label for="Fugato"><input type="checkbox" id="Fugato" value="Fugato" class="genre">Fugato</label>
+                        <label for="Fughetta"><input type="checkbox" id="Fughetta" value="Fughetta" class="genre">Fughetta</label>
+                        <label for="Fugue"><input type="checkbox" id="Fugue" value="Fugue" class="genre">Fugue</label>
+                        <label for="Furiant"><input type="checkbox" id="Furiant" value="Furiant" class="genre">Furiant</label>
+                        <label for="Galliard"><input type="checkbox" id="Galliard" value="Galliard" class="genre">Galliard</label>
+                        <label for="Galop"><input type="checkbox" id="Galop" value="Galop" class="genre">Galop</label>
+                        <label for="Gavotte"><input type="checkbox" id="Gavotte" value="Gavotte" class="genre">Gavotte</label>
+                        <label for="Gigue"><input type="checkbox" id="Gigue" value="Gigue" class="genre">Gigue</label>
+                        <label for="Glee"><input type="checkbox" id="Glee" value="Glee" class="genre">Glee</label>
+                        <label for="Gloria"><input type="checkbox" id="Gloria" value="Gloria" class="genre">Gloria</label>
+                        <label for="Gradual"><input type="checkbox" id="Gradual" value="Gradual" class="genre">Gradual</label>
+                        <label for="Ground"><input type="checkbox" id="Ground" value="Ground" class="genre">Ground</label>
+                        <label for="Guajira"><input type="checkbox" id="Guajira" value="Guajira" class="genre">Guajira</label>
+                        <label for="Habanera"><input type="checkbox" id="Habanera" value="Habanera" class="genre">Habanera</label>
+                        <label for="Harmony"><input type="checkbox" id="Harmony" value="Harmony" class="genre">Harmony</label>
+                        <label for="Hornpipe"><input type="checkbox" id="Hornpipe" value="Hornpipe" class="genre">Hornpipe</label>
+                        <label for="Humoresque"><input type="checkbox" id="Humoresque" value="Humoresque" class="genre">Humoresque</label>
+                        <label for="Hymn"><input type="checkbox" id="Hymn" value="Hymn" class="genre">Hymn</label>
+                        <label for="Impromptu"><input type="checkbox" id="Impromptu" value="Impromptu" class="genre">Impromptu</label>
+                        <label for="Improperia"><input type="checkbox" id="Improperia" value="Improperia" class="genre">Improperia</label>
+                        <label for="Improvisation"><input type="checkbox" id="Improvisation" value="Improvisation" class="genre">Improvisation</label>
+                        <label for="Interlude"><input type="checkbox" id="Interlude" value="Interlude" class="genre">Interlude</label>
+                        <label for="Intermede"><input type="checkbox" id="Intermede" value="Intermede" class="genre">Intermede</label>
+                        <label for="Intermezzo"><input type="checkbox" id="Intermezzo" value="Intermezzo" class="genre">Intermezzo</label>
+                        <label for="Intonation"><input type="checkbox" id="Intonation" value="Intonation" class="genre">Intonation</label>
+                        <label for="Intrada"><input type="checkbox" id="Intrada" value="Intrada" class="genre">Intrada</label>
+                        <label for="Introduction"><input type="checkbox" id="Introduction" value="Introduction" class="genre">Introduction</label>
+                        <label for="Introit"><input type="checkbox" id="Introit" value="Introit" class="genre">Introit</label>
+                        <label for="Invention"><input type="checkbox" id="Invention" value="Invention" class="genre">Invention</label>
+                        <label for="Jacara"><input type="checkbox" id="Jacara" value="Jacara" class="genre">Jacara</label>
+                        <label for="Jazz"><input type="checkbox" id="Jazz" value="Jazz" class="genre">Jazz</label>
+                        <label for="Jota"><input type="checkbox" id="Jota" value="Jota" class="genre">Jota</label>
+                        <label for="Krakowiak"><input type="checkbox" id="Krakowiak" value="Krakowiak" class="genre">Krakowiak</label>
+                        <label for="Kriti"><input type="checkbox" id="Kriti" value="Kriti" class="genre">Kriti</label>
+                        <label for="Kyrie"><input type="checkbox" id="Kyrie" value="Kyrie" class="genre">Kyrie</label>
+                        <label for="Lamentation"><input type="checkbox" id="Lamentation" value="Lamentation" class="genre">Lamentation</label>
+                        <label for="Landler"><input type="checkbox" id="Landler" value="Landler" class="genre">Landler</label>
+                        <label for="Larghetto"><input type="checkbox" id="Larghetto" value="Larghetto" class="genre">Larghetto</label>
+                        <label for="Largo"><input type="checkbox" id="Largo" value="Largo" class="genre">Largo</label>
+                        <label for="Lento"><input type="checkbox" id="Lento" value="Lento" class="genre">Lento</label>
+                        <label for="Lesson"><input type="checkbox" id="Lesson" value="Lesson" class="genre">Lesson</label>
+                        <label for="Libretto"><input type="checkbox" id="Libretto" value="Libretto" class="genre">Libretto</label>
+                        <label for="Lied"><input type="checkbox" id="Lied" value="Lied" class="genre">Lied</label>
+                        <label for="Litany"><input type="checkbox" id="Litany" value="Litany" class="genre">Litany</label>
+                        <label for="Liturgy"><input type="checkbox" id="Liturgy" value="Liturgy" class="genre">Liturgy</label>
+                        <label for="Lullaby"><input type="checkbox" id="Lullaby" value="Lullaby" class="genre">Lullaby</label>
+                        <label for="Madrigal"><input type="checkbox" id="Madrigal" value="Madrigal" class="genre">Madrigal</label>
+                        <label for="Magnificat"><input type="checkbox" id="Magnificat" value="Magnificat" class="genre">Magnificat</label>
+                        <label for="Malaguena"><input type="checkbox" id="Malaguena" value="Malaguena" class="genre">Malaguena</label>
+                        <label for="March"><input type="checkbox" id="March" value="March" class="genre">March</label>
+                        <label for="Masque"><input type="checkbox" id="Masque" value="Masque" class="genre">Masque</label>
+                        <label for="Mass"><input type="checkbox" id="Mass" value="Mass" class="genre">Mass</label>
+                        <label for="Mazurka"><input type="checkbox" id="Mazurka" value="Mazurka" class="genre">Mazurka</label>
+                        <label for="Meditation"><input type="checkbox" id="Meditation" value="Meditation" class="genre">Meditation</label>
+                        <label for="Medley"><input type="checkbox" id="Medley" value="Medley" class="genre">Medley</label>
+                        <label for="Melodrama"><input type="checkbox" id="Melodrama" value="Melodrama" class="genre">Melodrama</label>
+                        <label for="Melody"><input type="checkbox" id="Melody" value="Melody" class="genre">Melody</label>
+                        <label for="Method"><input type="checkbox" id="Method" value="Method" class="genre">Method</label>
+                        <label for="Milonga"><input type="checkbox" id="Milonga" value="Milonga" class="genre">Milonga</label>
+                        <label for="Minuet"><input type="checkbox" id="Minuet" value="Minuet" class="genre">Minuet</label>
+                        <label for="Miserere"><input type="checkbox" id="Miserere" value="Miserere" class="genre">Miserere</label>
+                        <label for="Moderato"><input type="checkbox" id="Moderato" value="Moderato" class="genre">Moderato</label>
+                        <label for="Modinha"><input type="checkbox" id="Modinha" value="Modinha" class="genre">Modinha</label>
+                        <label for="Monodrama"><input type="checkbox" id="Monodrama" value="Monodrama" class="genre">Monodrama</label>
+                        <label for="Motet"><input type="checkbox" id="Motet" value="Motet" class="genre">Motet</label>
+                        <label for="Movement"><input type="checkbox" id="Movement" value="Movement" class="genre">Movement</label>
+                        <label for="Musette"><input type="checkbox" id="Musette" value="Musette" class="genre">Musette</label>
+                        <label for="Musical"><input type="checkbox" id="Musical" value="Musical" class="genre">Musical</label>
+                        <label for="Nocturne"><input type="checkbox" id="Nocturne" value="Nocturne" class="genre">Nocturne</label>
+                        <label for="Nonet"><input type="checkbox" id="Nonet" value="Nonet" class="genre">Nonet</label>
+                        <label for="Octet"><input type="checkbox" id="Octet" value="Octet" class="genre">Octet</label>
+                        <label for="Ode"><input type="checkbox" id="Ode" value="Ode" class="genre">Ode</label>
+                        <label for="Offertorium"><input type="checkbox" id="Offertorium" value="Offertorium" class="genre">Offertorium</label>
+                        <label for="Offertory"><input type="checkbox" id="Offertory" value="Offertory" class="genre">Offertory</label>
+                        <label for="Opera"><input type="checkbox" id="Opera" value="Opera" class="genre">Opera</label>
+                        <label for="Opera-ballet"><input type="checkbox" id="Opera-ballet" value="Opera-ballet" class="genre">Opera-ballet</label>
+                        <label for="Operetta"><input type="checkbox" id="Operetta" value="Operetta" class="genre">Operetta</label>
+                        <label for="Oratorio"><input type="checkbox" id="Oratorio" value="Oratorio" class="genre">Oratorio</label>
+                        <label for="Orchestration"><input type="checkbox" id="Orchestration" value="Orchestration" class="genre">Orchestration</label>
+                        <label for="Organology"><input type="checkbox" id="Organology" value="Organology" class="genre">Organology</label>
+                        <label for="Ostinato"><input type="checkbox" id="Ostinato" value="Ostinato" class="genre">Ostinato</label>
+                        <label for="Overture"><input type="checkbox" id="Overture" value="Overture" class="genre">Overture</label>
+                        <label for="Pantomime"><input type="checkbox" id="Pantomime" value="Pantomime" class="genre">Pantomime</label>
+                        <label for="Paraphrase"><input type="checkbox" id="Paraphrase" value="Paraphrase" class="genre">Paraphrase</label>
+                        <label for="Partimento"><input type="checkbox" id="Partimento" value="Partimento" class="genre">Partimento</label>
+                        <label for="Partita"><input type="checkbox" id="Partita" value="Partita" class="genre">Partita</label>
+                        <label for="Paseo"><input type="checkbox" id="Paseo" value="Paseo" class="genre">Paseo</label>
+                        <label for="Paso"><input type="checkbox" id="Paso" value="Paso" class="genre">Paso</label>
+                        <label for="Pasodoble"><input type="checkbox" id="Pasodoble" value="Pasodoble" class="genre">Pasodoble</label>
+                        <label for="Passacaglia"><input type="checkbox" id="Passacaglia" value="Passacaglia" class="genre">Passacaglia</label>
+                        <label for="Passamezzo"><input type="checkbox" id="Passamezzo" value="Passamezzo" class="genre">Passamezzo</label>
+                        <label for="Passepied"><input type="checkbox" id="Passepied" value="Passepied" class="genre">Passepied</label>
+                        <label for="Passion"><input type="checkbox" id="Passion" value="Passion" class="genre">Passion</label>
+                        <label for="Pasticcio"><input type="checkbox" id="Pasticcio" value="Pasticcio" class="genre">Pasticcio</label>
+                        <label for="Pastorale"><input type="checkbox" id="Pastorale" value="Pastorale" class="genre">Pastorale</label>
+                        <label for="Pavane"><input type="checkbox" id="Pavane" value="Pavane" class="genre">Pavane</label>
+                        <label for="Piece"><input type="checkbox" id="Piece" value="Piece" class="genre">Piece</label>
+                        <label for="Plainchant"><input type="checkbox" id="Plainchant" value="Plainchant" class="genre">Plainchant</label>
+                        <label for="Polka"><input type="checkbox" id="Polka" value="Polka" class="genre">Polka</label>
+                        <label for="Polonaise"><input type="checkbox" id="Polonaise" value="Polonaise" class="genre">Polonaise</label>
+                        <label for="Postlude"><input type="checkbox" id="Postlude" value="Postlude" class="genre">Postlude</label>
+                        <label for="Potpourri"><input type="checkbox" id="Potpourri" value="Potpourri" class="genre">Potpourri</label>
+                        <label for="Praeambulum"><input type="checkbox" id="Praeambulum" value="Praeambulum" class="genre">Praeambulum</label>
+                        <label for="Prelude"><input type="checkbox" id="Prelude" value="Prelude" class="genre">Prelude</label>
+                        <label for="Presto"><input type="checkbox" id="Presto" value="Presto" class="genre">Presto</label>
+                        <label for="Processional"><input type="checkbox" id="Processional" value="Processional" class="genre">Processional</label>
+                        <label for="Prologue"><input type="checkbox" id="Prologue" value="Prologue" class="genre">Prologue</label>
+                        <label for="Psalm"><input type="checkbox" id="Psalm" value="Psalm" class="genre">Psalm</label>
+                        <label for="Quadrille"><input type="checkbox" id="Quadrille" value="Quadrille" class="genre">Quadrille</label>
+                        <label for="Quartet"><input type="checkbox" id="Quartet" value="Quartet" class="genre">Quartet</label>
+                        <label for="Quickstep"><input type="checkbox" id="Quickstep" value="Quickstep" class="genre">Quickstep</label>
+                        <label for="Quintet"><input type="checkbox" id="Quintet" value="Quintet" class="genre">Quintet</label>
+                        <label for="Quodlibet"><input type="checkbox" id="Quodlibet" value="Quodlibet" class="genre">Quodlibet</label>
+                        <label for="Rag"><input type="checkbox" id="Rag" value="Rag" class="genre">Rag</label>
+                        <label for="Recessional"><input type="checkbox" id="Recessional" value="Recessional" class="genre">Recessional</label>
+                        <label for="Recit"><input type="checkbox" id="Recit" value="Recit" class="genre">Recit</label>
+                        <label for="Recitative"><input type="checkbox" id="Recitative" value="Recitative" class="genre">Recitative</label>
+                        <label for="Requiem"><input type="checkbox" id="Requiem" value="Requiem" class="genre">Requiem</label>
+                        <label for="Responsory"><input type="checkbox" id="Responsory" value="Responsory" class="genre">Responsory</label>
+                        <label for="Revue"><input type="checkbox" id="Revue" value="Revue" class="genre">Revue</label>
+                        <label for="Rhapsody"><input type="checkbox" id="Rhapsody" value="Rhapsody" class="genre">Rhapsody</label>
+                        <label for="Ricercar"><input type="checkbox" id="Ricercar" value="Ricercar" class="genre">Ricercar</label>
+                        <label for="Rigaudon"><input type="checkbox" id="Rigaudon" value="Rigaudon" class="genre">Rigaudon</label>
+                        <label for="Ritournelle"><input type="checkbox" id="Ritournelle" value="Ritournelle" class="genre">Ritournelle</label>
+                        <label for="Romance"><input type="checkbox" id="Romance" value="Romance" class="genre">Romance</label>
+                        <label for="Rondeau"><input type="checkbox" id="Rondeau" value="Rondeau" class="genre">Rondeau</label>
+                        <label for="Rondino"><input type="checkbox" id="Rondino" value="Rondino" class="genre">Rondino</label>
+                        <label for="Rondo"><input type="checkbox" id="Rondo" value="Rondo" class="genre">Rondo</label>
+                        <label for="Rondoletto"><input type="checkbox" id="Rondoletto" value="Rondoletto" class="genre">Rondoletto</label>
+                        <label for="Round"><input type="checkbox" id="Round" value="Round" class="genre">Round</label>
+                        <label for="Rumba"><input type="checkbox" id="Rumba" value="Rumba" class="genre">Rumba</label>
+                        <label for="Saltarello"><input type="checkbox" id="Saltarello" value="Saltarello" class="genre">Saltarello</label>
+                        <label for="Samba"><input type="checkbox" id="Samba" value="Samba" class="genre">Samba</label>
+                        <label for="Sanctus"><input type="checkbox" id="Sanctus" value="Sanctus" class="genre">Sanctus</label>
+                        <label for="Sarabande"><input type="checkbox" id="Sarabande" value="Sarabande" class="genre">Sarabande</label>
+                        <label for="Sardana"><input type="checkbox" id="Sardana" value="Sardana" class="genre">Sardana</label>
+                        <label for="Scherzo"><input type="checkbox" id="Scherzo" value="Scherzo" class="genre">Scherzo</label>
+                        <label for="Seguidilla"><input type="checkbox" id="Seguidilla" value="Seguidilla" class="genre">Seguidilla</label>
+                        <label for="Septet"><input type="checkbox" id="Septet" value="Septet" class="genre">Septet</label>
+                        <label for="Sequence"><input type="checkbox" id="Sequence" value="Sequence" class="genre">Sequence</label>
+                        <label for="Serenade"><input type="checkbox" id="Serenade" value="Serenade" class="genre">Serenade</label>
+                        <label for="Serenata"><input type="checkbox" id="Serenata" value="Serenata" class="genre">Serenata</label>
+                        <label for="Service"><input type="checkbox" id="Service" value="Service" class="genre">Service</label>
+                        <label for="Sevillana"><input type="checkbox" id="Sevillana" value="Sevillana" class="genre">Sevillana</label>
+                        <label for="Sextet"><input type="checkbox" id="Sextet" value="Sextet" class="genre">Sextet</label>
+                        <label for="Siciliana"><input type="checkbox" id="Siciliana" value="Siciliana" class="genre">Siciliana</label>
+                        <label for="Sinfonia"><input type="checkbox" id="Sinfonia" value="Sinfonia" class="genre">Sinfonia</label>
+                        <label for="Sinfonietta"><input type="checkbox" id="Sinfonietta" value="Sinfonietta" class="genre">Sinfonietta</label>
+                        <label for="Singspiel"><input type="checkbox" id="Singspiel" value="Singspiel" class="genre">Singspiel</label>
+                        <label for="Sketch"><input type="checkbox" id="Sketch" value="Sketch" class="genre">Sketch</label>
+                        <label for="Solfeggio"><input type="checkbox" id="Solfeggio" value="Solfeggio" class="genre">Solfeggio</label>
+                        <label for="Sonata"><input type="checkbox" id="Sonata" value="Sonata" class="genre">Sonata</label>
+                        <label for="Sonatina"><input type="checkbox" id="Sonatina" value="Sonatina" class="genre">Sonatina</label>
+                        <label for="Song"><input type="checkbox" id="Song" value="Song" class="genre">Song</label>
+                        <label for="Sousedska"><input type="checkbox" id="Sousedska" value="Sousedska" class="genre">Sousedska</label>
+                        <label for="Spiritual"><input type="checkbox" id="Spiritual" value="Spiritual" class="genre">Spiritual</label>
+                        <label for="Study"><input type="checkbox" id="Study" value="Study" class="genre">Study</label>
+                        <label for="Suite"><input type="checkbox" id="Suite" value="Suite" class="genre">Suite</label>
+                        <label for="Symphony"><input type="checkbox" id="Symphony" value="Symphony" class="genre">Symphony</label>
+                        <label for="Tambourin"><input type="checkbox" id="Tambourin" value="Tambourin" class="genre">Tambourin</label>
+                        <label for="Tango"><input type="checkbox" id="Tango" value="Tango" class="genre">Tango</label>
+                        <label for="Tarantella"><input type="checkbox" id="Tarantella" value="Tarantella" class="genre">Tarantella</label>
+                        <label for="Terzettino"><input type="checkbox" id="Terzettino" value="Terzettino" class="genre">Terzettino</label>
+                        <label for="Threnody"><input type="checkbox" id="Threnody" value="Threnody" class="genre">Threnody</label>
+                        <label for="Tiento"><input type="checkbox" id="Tiento" value="Tiento" class="genre">Tiento</label>
+                        <label for="Toccata"><input type="checkbox" id="Toccata" value="Toccata" class="genre">Toccata</label>
+                        <label for="Tombeau"><input type="checkbox" id="Tombeau" value="Tombeau" class="genre">Tombeau</label>
+                        <label for="Tonadilla"><input type="checkbox" id="Tonadilla" value="Tonadilla" class="genre">Tonadilla</label>
+                        <label for="Trio"><input type="checkbox" id="Trio" value="Trio" class="genre">Trio</label>
+                        <label for="Tyrolienne"><input type="checkbox" id="Tyrolienne" value="Tyrolienne" class="genre">Tyrolienne</label>
+                        <label for="Variation"><input type="checkbox" id="Variation" value="Variation" class="genre">Variation</label>
+                        <label for="Varnam"><input type="checkbox" id="Varnam" value="Varnam" class="genre">Varnam</label>
+                        <label for="Vaudeville"><input type="checkbox" id="Vaudeville" value="Vaudeville" class="genre">Vaudeville</label>
+                        <label for="Verset"><input type="checkbox" id="Verset" value="Verset" class="genre">Verset</label>
+                        <label for="Vesper"><input type="checkbox" id="Vesper" value="Vesper" class="genre">Vesper</label>
+                        <label for="Villancico"><input type="checkbox" id="Villancico" value="Villancico" class="genre">Villancico</label>
+                        <label for="Villanelle"><input type="checkbox" id="Villanelle" value="Villanelle" class="genre">Villanelle</label>
+                        <label for="Vivace"><input type="checkbox" id="Vivace" value="Vivace" class="genre">Vivace</label>
+                        <label for="Vocalise"><input type="checkbox" id="Vocalise" value="Vocalise" class="genre">Vocalise</label>
+                        <label for="Volte"><input type="checkbox" id="Volte" value="Volte" class="genre">Volte</label>
+                        <label for="Voluntary"><input type="checkbox" id="Voluntary" value="Voluntary" class="genre">Voluntary</label>
+                        <label for="Waltz"><input type="checkbox" id="Waltz" value="Waltz" class="genre">Waltz</label>
+                        <label for="Writing"><input type="checkbox" id="Writing" value="Writing" class="genre">Writing</label>
+                        <label for="Zapateado"><input type="checkbox" id="Zapateado" value="Zapateado" class="genre">Zapateado</label>
+                        <label for="Zarzuela"><input type="checkbox" id="Zarzuela" value="Zarzuela" class="genre">Zarzuela</label>
+                        <label for="Zortzico"><input type="checkbox" id="Zortzico" value="Zortzico" class="genre">Zortzico</label>
+                        <label for="Zweifacher"><input type="checkbox" id="Zweifacher" value="Zweifacher" class="genre">Zweifacher</label>
+                    </fieldset>
+                </div>
+                <div class="form-field">
+                    <label for="style">Style:</label>
+                    <select id="style" name="style">
+                        <option></option>
+                        <option value="Ancient">Ancient</option>
+                        <option value="Medieval">Medieval</option>
+                        <option value="Renaissance">Renaissance</option> 
+                        <option value="Baroque">Baroque</option>
+                        <option value="Classical">Classical</option>
+                        <option value="Romantic">Romantic</option>
+                        <option value="Modernism">Modernism</option>
+                        <option value="Contemporary">Contemporary</option>
+                        <option value="Jazz">Jazz</option>
+                        <option value="Non-western classical">Non-western Classical</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Traditional (folk) style">Traditional (folk)</option>
+                        <option value="Traditional">Traditional</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <fieldset>
+                        <legend>Composer:</legend>
+                        <label for="fname">First Name:</label>
+                        <input type="text" id="fname">
+                        <label for="lname">Last Name:</label>
+                        <input type="text" id="lname">
+                    </fieldset>
+                </div>
+                <div class="form-field">
+                    <label for="performance">Performance Link:</label>
+                    <input type="text" id="performance">
+                </div>
+                <div class="form-field">
+                    <label for="performer">Performers:</label>
+                    <input type="text" id="performer">
+                </div>
+                <div class="form-field">
+                    <label for="sheet-music">Sheet Music link:</label>
+                    <input type="url" id="sheet-music">
+                </div>
+                <button type="button" id="add-piece">Add piece</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
