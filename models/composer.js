@@ -7,7 +7,7 @@ const Composer = new Schema(
         time_period: {type: Schema.Types.ObjectId, ref: 'Time'},
         born: {type: Schema.Types.Mixed, required: false},
         died: {type: Schema.Types.Mixed, required: false},
-        nationality: {type: String, required: false},
+        nationality: [{type: String, required: false}],
         biography: {type: String, required: false},
         bio_link: {type: String, required: false},
         picture: {type: String, required: false}

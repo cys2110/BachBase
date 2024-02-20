@@ -15,7 +15,9 @@ const Piece = new Schema(
             link: {type: String, required: false},
             performer: {type: String, required: false}
         },
-        sheet_music: {type: String, required: true}
+        sheet_music: {type: String, required: true},
+        about: {type: String, required: false},
+        movements: [{type: String, required: false}]
     },
     {timestamps: true}
 )

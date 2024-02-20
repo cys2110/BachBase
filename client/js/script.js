@@ -16,13 +16,14 @@ time.addEventListener('change', () => {
 })
 
 addComposer.addEventListener('click', () => {
+    const nationalityArray = nationality.value.split(', ')
     const data = {
         first_name: firstName.value,
         last_name: lastName.value,
         time_period: selectedTime,
         born: born.value,
         died: died.value,
-        nationality: nationality.value,
+        nationality: nationalityArray,
         bio: bio.value,
         link: link.value,
         picture: picture.value
@@ -31,6 +32,7 @@ addComposer.addEventListener('click', () => {
     if (firstName.value === '') {
         filteredData.first_name = ''
     }
+
     axios.post('http://localhost:3001/composers', filteredData)
     .then(response => {
         console.log('Response:', response.data)
@@ -46,6 +48,7 @@ let instrumentation = []
 const piece = document.querySelector('#piece')
 const alias = document.querySelector('#alias')
 const opusForm = document.querySelector('#opus')
+const about = document.querySelector('#about')
 const year = document.querySelector('#year')
 const key = document.querySelector('#key')
 const genreForm = document.querySelectorAll('.genre')
@@ -56,12 +59,7 @@ const performanceLink = document.querySelector('#performance')
 const performerForm = document.querySelector('#performer')
 const sheetMusic = document.querySelector('#sheet-music')
 const styleForm = document.querySelector('#style')
-let style
-
-styleForm.addEventListener('change', () => {
-    const index = styleForm.selectedIndex
-    style = styleForm.options[index].value
-})
+const movements = document.querySelector('#movements')
 
 const getInstrumentation = () => {
     instrumentation = []
@@ -84,11 +82,15 @@ const getGenre = () => {
 addPiece.addEventListener('click', () => {
     getInstrumentation()
     getGenre()
+    const index=styleForm.selectedIndex
+    const style = styleForm.options[index].value
     const performance = {
         link: performanceLink.value,
         performer: performerForm.value
     }
-    const unicodeKey = key.value.replace('-flat', '<sup>&#9837</sup>').replace('-sharp', '<sup>U+266F</sup>')
+    const movementsArray = movements.value.split(', ')
+    const unicodeAbout = about.value.replace('-flat', '<sup>&#9837;</sup>').replace('-sharp', '<sup>&#9839;</sup>')
+    const unicodeKey = key.value.replace('-flat', '<sup>&#9837;</sup>').replace('-sharp', '<sup>&#9839;</sup>')
     const filteredPerformance = Object.fromEntries(Object.entries(performance).filter(([_, value]) => value !== null && value !== ""))
     const data = {
         piece: piece.value,
@@ -96,6 +98,8 @@ addPiece.addEventListener('click', () => {
         opus: opusForm.value,
         year: year.value,
         key: unicodeKey,
+        about: unicodeAbout,
+        movements: movementsArray,
         genre: genre,
         style: style,
         first: fName.value,
@@ -104,7 +108,7 @@ addPiece.addEventListener('click', () => {
         instrumentation: instrumentation,
         sheet_music: sheetMusic.value,
     }
-    const filteredData = Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== ""))
+    const filteredData = Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== "" && !(Array.isArray(value) && value.length === 0)))
     axios.post('http://localhost:3001/pieces', filteredData)
     .then(response => {
         console.log('Response:', response.data)

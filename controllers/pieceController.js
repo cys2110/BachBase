@@ -97,7 +97,9 @@ const createPiece = async(req, res) => {
             style: req.body.style,
             composer: composerId,
             performance: req.body.performance,
-            sheet_music: req.body.sheet_music
+            sheet_music: req.body.sheet_music,
+            about: req.body.about,
+            movements: req.body.movements
         })
         await piece.save()
         for (let i=0; i<req.body.instrumentation.length; i++) {
@@ -140,7 +142,9 @@ const editPiece = async(req, res) => {
             style: req.body.style,
             composer: composerId,
             performance: req.body.performance,
-            sheet_music: req.body.sheet_music
+            sheet_music: req.body.sheet_music,
+            about: req.body.about,
+            movements: req.body.movements
         })
         if (req.body.instrumentation) {
             for (let i=0; i<req.body.instrumentation.length; i++) {

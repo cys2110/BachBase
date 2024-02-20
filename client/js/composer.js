@@ -70,11 +70,13 @@ const details = async() => {
     timeHeading.innerHTML = 'Time period'
     const time = detail.appendChild(document.createElement('dd'))
     time.innerHTML = response.time_period.period
-    if (response.nationality) {
+    if (response.nationality.length > 0) {
         const nationalityHeading = detail.appendChild(document.createElement('dt'))
-        nationalityHeading.innerHTML = 'Nationality'
-        const nationality = detail.appendChild(document.createElement('dd'))
-        nationality.innerHTML = response.nationality
+            nationalityHeading.innerHTML = 'Nationality'
+        for (let i=0; i < response.nationality.length; i++) {
+            const nationality = detail.appendChild(document.createElement('dd'))
+            nationality.innerHTML = response.nationality[i]
+        }
     }
     if (response.biography) {
         const bioHeading = detail.appendChild(document.createElement('dt'))
@@ -110,19 +112,20 @@ time.addEventListener('change', () => {
 })
 
 editButton.addEventListener('click', () => {
+    const nationalityArray = nationality.value.split(', ')
     const data = {
         first_name: firstName.value,
         last_name: lastName.value,
         time_period: selectedTime,
         born: born.value,
         died: died.value,
-        nationality: nationality.value,
+        nationality: nationalityArray,
         bio: bio.value,
         link: link.value,
         picture: pictureLink.value
     }
 
-    const filteredData = Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== ""))
+    const filteredData = Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== "" && value !== undefined))
     axios.patch(`http://localhost:3001/composers/id/${id}`, filteredData)
     .then(response => {
         console.log('Response:', response.data)

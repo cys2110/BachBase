@@ -81,6 +81,20 @@ const details = async() => {
         const instrumentation = detail.appendChild(document.createElement('dd'))
         instrumentation.innerHTML = response.instrumentation[i].instrument
     }
+    if (response.movements.length > 0) {
+        const movementsHeading = detail.appendChild(document.createElement('dt'))
+        movementsHeading.innerHTML = 'Movements/Sections'
+        for (let i=0; i < response.movements.length; i++) {
+            const movement = detail.appendChild(document.createElement('dd'))
+            movement.innerHTML = response.movements[i]
+        }
+    }
+    if (response.about) {
+        const aboutHeading = detail.appendChild(document.createElement('dt'))
+        aboutHeading.innerHTML = 'Description'
+        const about = detail.appendChild(document.createElement('dd'))
+        about.innerHTML = response.about
+    }
     music.href = response.sheet_music
 }
 
@@ -94,6 +108,7 @@ const alias = document.querySelector('#alias')
 const opusForm = document.querySelector('#opus')
 const year = document.querySelector('#year')
 const key = document.querySelector('#key')
+const about = document.querySelector('#about')
 const genreForm = document.querySelectorAll('.genre')
 let genre = []
 const fName = document.querySelector('#fname')
@@ -102,14 +117,9 @@ const performanceLink = document.querySelector('#performanceForm')
 const performerForm = document.querySelector('#performerForm')
 const sheetMusic = document.querySelector('#sheet-music')
 const styleForm = document.querySelector('#style')
-let style
 const editButton = document.querySelector('#edit-piece')
 editButton.value = id
-
-styleForm.addEventListener('change', () => {
-    const index = styleForm.selectedIndex
-    style = styleForm.options[index].value
-})
+const movements = document.querySelector('#movements')
 
 const getInstrumentation = () => {
     instrumentation = []
@@ -134,6 +144,9 @@ editButton.addEventListener('click', () => {
     getGenre()
     let performanceObject
     let filteredPerformance
+    const index=styleForm.selectedIndex
+    const style = styleForm.options[index].value
+    const unicodeAbout = about.value.replace('-flat', '<sup>&#9837;</sup>').replace('-sharp', '<sup>&#9839;</sup>')
     if (performanceLink.value !== "") {
         performanceObject = {
             link: performanceLink.value,
@@ -144,16 +157,19 @@ editButton.addEventListener('click', () => {
     
     let unicodeKey
     if (key.value) {
-        unicodeKey = key.value.replace('-flat', '<sup>&#9837</sup>').replace('-sharp', '<sup>&#9839</sup>')
+        unicodeKey = key.value.replace('-flat', '<sup>&#9837;</sup>').replace('-sharp', '<sup>&#9839;</sup>')
     }
+    const movementsArray = movements.value.split(', ')
     const data = {
         piece: piece.value,
         alias: alias.value,
         opus: opusForm.value,
         year: year.value,
         key: unicodeKey,
+        about: unicodeAbout,
         genre: genre,
         style: style,
+        movements: movementsArray,
         first: fName.value,
         last: lName.value,
         performance: filteredPerformance,
