@@ -27,6 +27,7 @@ const page = document.querySelector('#page')
 const dates = document.querySelector('#dates')
 const picture = document.querySelector('#picture')
 const detail = document.querySelector('#details')
+const pieces = document.querySelector('#pieces')
 
 const details = async() => {
     const call = await axios.get(`http://localhost:3001/composers/id/${id}`)
@@ -81,12 +82,10 @@ const details = async() => {
         const bio = detail.appendChild(document.createElement('dd'))
         bio.innerHTML = `${response.biography}<br><a href="${response.bio_link}" target="_blank">Read more</a>`
     }
-    const piecesHeading = detail.appendChild(document.createElement('dt'))
-    piecesHeading.innerHTML = 'Pieces'
     const piecesCall = await axios.get(`http://localhost:3001/pieces/composer/${id}`)
     const piecesResponse = piecesCall.data
     for (let i=0; i < piecesResponse.length; i++) {
-        const piece = detail.appendChild(document.createElement('dd'))
+        const piece = pieces.appendChild(document.createElement('dd'))
         piece.innerHTML = `<a href="../html/piece.html?id=${piecesResponse[i]._id}">${piecesResponse[i].piece}</a>`
     }
 }
@@ -176,12 +175,12 @@ const searchResults = async() => {
 }
 
 const removeChildNodes = (details) => {
-    while (details.firstChild) {
-      details.removeChild(details.firstChild)
+    while (details.childNodes.length > 0 && details.lastChild !== search) {
+        details.removeChild(details.lastChild);
     }
 }
 
-search.addEventListener('keydown', () => {
+search.addEventListener('input', () => {
     setTimeout(() => {
         searchResults()
     }, delay)

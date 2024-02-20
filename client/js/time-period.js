@@ -1,9 +1,7 @@
-// Global variables
 const headings = document.querySelectorAll('.era')
 const spans =document.querySelectorAll('.span')
 const summaries = document.querySelectorAll('.summary')
 const composers = document.querySelectorAll('.composers')
-
 
 const details = async() => {
     for (let i=0; i<headings.length; i++) {
@@ -16,6 +14,15 @@ const details = async() => {
 }
 
 details()
+
+const dropdown = document.querySelectorAll('summary')
+const icons = document.querySelectorAll('i')
+
+for (let i=0; i<dropdown.length; i++) {
+    dropdown[i].addEventListener('click', () => {
+        icons[i].classList.toggle('fa-rotate-90')
+    })
+}
 
 const composerLists = async() => {
     for (let i=0; i<composers.length; i++) {
@@ -75,12 +82,12 @@ const searchResults = async() => {
 }
 
 const removeChildNodes = (details) => {
-    while (details.firstChild) {
-      details.removeChild(details.firstChild)
+    while (details.childNodes.length > 0 && details.lastChild !== search) {
+        details.removeChild(details.lastChild);
     }
 }
 
-search.addEventListener('keydown', () => {
+search.addEventListener('input', () => {
     setTimeout(() => {
         searchResults()
     }, delay)

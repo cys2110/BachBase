@@ -4,28 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css" >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/favicon.jpeg">
     <script defer src="../js/composer.js"></script>
     <title id="title"></title>
 </head>
 <body>
-    <div>
+    <div class="header">
+        <h1>BachBase</h1>
         <a href="../html/index.html">Home</a>
+        <a href="../html//time-period.html">Time Periods</a>
         <a href="../html/composers.html">Composers</a>
         <a href="../html/instrumentation.html">Instrumentation</a>
     </div>
-    <div>
+    <div class="composer-wrapper">
+    <div class="composer-sidebar">
         <h1 id="page"></h1>
         <h4 id="dates"></h4>
         <img id="picture" src="">
     </div>
-    <div>
-        <input id="search-bar" type="text" placeholder="Search by composer or piece">
+    <div class="composer-body">
+        <div class="dropdown-content" id="dropdown-content">
+            <input id="search-bar" type="text" placeholder="Search by composer or piece">
+        </div>
         <dl id="details"></dl>
-    </div>
-    <div>
+        <dl>
+            <dt id="pieces-wrapper">Pieces</dt>
+            <div id="pieces"></div>
+        </dl>
+        <h3>Edit Composer</h3>
         <form>
+            <div class="composer-form">
             <div class="form-field">
                 <label for="first-name">First Name</label>
                 <input type="text" id="first-name" required>
@@ -59,10 +71,7 @@
                 <label for="nationality">Nationality:</label>
             <input type="text" id="nationality">
             </div>
-            <div class="form-field">
-                <label for="biography">Biography:</label>
-                <textarea name="biography" id="biography" rows="4" cols="30"></textarea>
-            </div>
+            
             <div class="form-field">
                 <label for="bio-link">Link to Wikipedia Page:</label>
                 <input type="text" id="bio-link">
@@ -71,8 +80,14 @@
                 <label for="picture">Link to picture:</label>
                 <input type="text" id="picture">
             </div>
-            <button type="button" id="edit" value="">Edit composer</button>
+            </div>
+            <div class="form-field composer-bio">
+                <label for="biography">Biography:</label>
+                <textarea name="biography" id="biography" rows="4" cols="30"></textarea>
+                <button type="button" id="edit" value="">Edit composer</button>
+            </div>
         </form>
+    </div>
     </div>
 </body>
 </html>

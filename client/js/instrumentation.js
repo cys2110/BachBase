@@ -10,16 +10,14 @@ const details = async() => {
         for (let n=0; n<call.data.length; n++) {
             const dropdown = document.createElement('details')
             const instrument = dropdown.appendChild(document.createElement('summary'))
-            instrument.innerHTML = call.data[n].instrument
+            instrument.innerHTML = `<i class="fa-solid fa-chevron-right"></i>${call.data[n].instrument}`
             types[i].after(dropdown)
 
             const piecesCall = await axios.get(`http://localhost:3001/pieces/instrument/${call.data[n].instrument}`)
             const instrumentList = document.createElement('ul')
             for (let j=0; j<piecesCall.data.length; j++) {
                 const pieces = instrumentList.appendChild(document.createElement('li'))
-                const pieceLink = pieces.appendChild(document.createElement('a'))
-                pieceLink.href = `../html/piece.html?id=${piecesCall.data[j]._id}`
-                pieceLink.innerHTML = piecesCall.data[j].piece
+                pieces.innerHTML = `<a href="../html/piece.html?id=${piecesCall.data[j]._id}">${piecesCall.data[j].piece}</a> (<em>${piecesCall.data[j].composer.first_name} ${piecesCall.data[j].composer.last_name}</em>)`
             }
             instrument.after(instrumentList)
         }
@@ -69,12 +67,12 @@ const searchResults = async() => {
 }
 
 const removeChildNodes = (details) => {
-    while (details.firstChild) {
-      details.removeChild(details.firstChild)
+    while (details.childNodes.length > 0 && details.lastChild !== search) {
+        details.removeChild(details.lastChild);
     }
 }
 
-search.addEventListener('keydown', () => {
+search.addEventListener('input', () => {
     setTimeout(() => {
         searchResults()
     }, delay)

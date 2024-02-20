@@ -102,12 +102,12 @@ const searchResults = async() => {
 }
 
 const removeChildNodes = (details) => {
-    while (details.firstChild) {
-      details.removeChild(details.firstChild)
+    while (details.childNodes.length > 0 && details.lastChild !== search) {
+        details.removeChild(details.lastChild);
     }
 }
 
-search.addEventListener('keydown', () => {
+search.addEventListener('input', () => {
     setTimeout(() => {
         searchResults()
     }, delay)

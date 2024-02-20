@@ -17,7 +17,6 @@ parseQueryString()
 const title = document.querySelector('#title')
 const page = document.querySelector('#page')
 const composer = document.querySelector('#composer')
-const opus = document.querySelector('#opus')
 const detail = document.querySelector('#details')
 const music = document.querySelector('#music')
 const performance = document.querySelector('#performance')
@@ -28,15 +27,21 @@ const details = async() => {
     const response = call.data
     title.innerHTML = `BachBase | ${response.piece}`
     page.innerHTML = response.piece
-    composer.innerHTML = `${response.composer.first_name} ${response.composer.last_name}`
-    if (response.opus) {
-        opus.innerHTML = response.opus
-    }
+    const composerLink = composer.appendChild(document.createElement('a'))
+    composerLink.href = `../html/composer.html?id=${response.composer._id}`
+    composerLink.innerHTML = `${response.composer.first_name} ${response.composer.last_name}`
+    
     if (response.performance) {
         performance.src = response.performance.link
-        performer.innerHTML = `<strong>Performers</strong> ${response.performance.performer}`
+        performer.innerHTML = `<strong>Performers:</strong> ${response.performance.performer}`
     } else {
         performance.style.display = 'none'
+    }
+    if (response.opus) {
+        const opusHeading = detail.appendChild(document.createElement('dt'))
+        opusHeading.innerHTML = 'Catalogue No.'
+        const opus = detail.appendChild(document.createElement('dd'))
+        opus.innerHTML = response.opus
     }
     if (response.alias) {
         const aliasHeading = detail.appendChild(document.createElement('dt'))
@@ -81,8 +86,7 @@ const details = async() => {
 
 details()
 
-// add/edit form
-const addPiece = document.querySelector('#add-piece')
+// edit form
 const checkboxes = document.querySelectorAll('.checkbox')
 let instrumentation = []
 const piece = document.querySelector('#piece')
@@ -99,7 +103,7 @@ const performerForm = document.querySelector('#performerForm')
 const sheetMusic = document.querySelector('#sheet-music')
 const styleForm = document.querySelector('#style')
 let style
-const editButton = document.querySelector('#edit')
+const editButton = document.querySelector('#edit-piece')
 editButton.value = id
 
 styleForm.addEventListener('change', () => {
@@ -124,39 +128,6 @@ const getGenre = () => {
         }
     })
 }
-
-addPiece.addEventListener('click', () => {
-    getInstrumentation()
-    getGenre()
-    const performance = {
-        link: performanceLink.value,
-        performer: performerForm.value
-    }
-    const unicodeKey = key.value.replace('-flat', '<sup>&#9837</sup>').replace('-sharp', '<sup>U+266F</sup>')
-    const filteredPerformance = Object.fromEntries(Object.entries(performance).filter(([_, value]) => value !== null && value !== ""))
-    const data = {
-        piece: piece.value,
-        alias: alias.value,
-        opus: opusForm.value,
-        year: year.value,
-        key: unicodeKey,
-        genre: genre,
-        style: style,
-        first: fName.value,
-        last: lName.value,
-        performance: filteredPerformance,
-        instrumentation: instrumentation,
-        sheet_music: sheetMusic.value,
-    }
-    const filteredData = Object.fromEntries(Object.entries(data).filter(([_, value]) => value !== null && value !== ""))
-    axios.post('http://localhost:3001/pieces', filteredData)
-    .then(response => {
-        console.log('Response:', response.data)
-    })
-    .catch(error => {
-        console.log('Error:', error)
-    })
-})
 
 editButton.addEventListener('click', () => {
     getInstrumentation()
@@ -241,8 +212,8 @@ const searchResults = async() => {
 }
 
 const removeChildNodes = (details) => {
-    while (details.firstChild) {
-      details.removeChild(details.firstChild)
+    while (details.childNodes.length > 0 && details.lastChild !== search) {
+        details.removeChild(details.lastChild);
     }
 }
 
@@ -250,36 +221,4 @@ search.addEventListener('input', () => {
     setTimeout(() => {
         searchResults()
     }, delay)
-})
-
-// instrument checkbox search - adapted from ChatGPT
-const searchInstruments = document.getElementById('instrument-search')
-const instruments = document.querySelectorAll('#instrumentation input[type="checkbox"]')
-
-searchInstruments.addEventListener('input', function() {
-    const search = searchInstruments.value.trim().toLowerCase();
-    instruments.forEach((checkbox) => {
-        const label = checkbox.parentElement.textContent.toLowerCase();
-        if (search === '' || label.includes(search)) {
-            checkbox.parentElement.style.display = 'block';
-        } else {
-            checkbox.parentElement.style.display = 'none'
-        }
-    })
-})
-
-// genre checkbox search
-const searchGenres = document.getElementById('genre-search')
-const genres = document.querySelectorAll('#genre-fieldset input[type="checkbox"]')
-
-searchGenres.addEventListener('input', function() {
-    const search = searchGenres.value.trim().toLowerCase();
-    genres.forEach((checkbox) => {
-        const label = checkbox.parentElement.textContent.toLowerCase();
-        if (search === '' || label.includes(search)) {
-            checkbox.parentElement.style.display = 'block';
-        } else {
-            checkbox.parentElement.style.display = 'none'
-        }
-    })
 })
