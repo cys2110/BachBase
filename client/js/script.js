@@ -5,6 +5,7 @@ const filterObject = (data) => {
         if (
             value == null ||
             value === "" ||
+            (Array.isArray(value) && value.every(item => item === "")) ||
             (Array.isArray(value) && value.length === 0) ||
             (typeof value === 'object' && Object.keys(value).length === 0)
         ) {
@@ -134,7 +135,6 @@ searchGenres.addEventListener('input', function() {
 
 // // select instrumentation checked boxes
 const getInstrumentation = () => {
-    instrumentation = []
     checkboxes.forEach(checkbox => {
         if (checkbox.checked) {
             instrumentation.push(checkbox.value)
@@ -144,7 +144,6 @@ const getInstrumentation = () => {
 
 // // select genre checked boxes
 const getGenre = () => {
-    genre = []
     genreForm.forEach(checkbox => {
         if (checkbox.checked) {
             genre.push(checkbox.value)
@@ -159,8 +158,9 @@ addPiece.addEventListener('click', () => {
 
     const index=styleForm.selectedIndex
     const style = styleForm.options[index].value
+    const embedLink = performanceLink.value.replaceAll('watch?v=', 'embed/')
     const performance = {
-        link: performanceLink.value,
+        link: embedLink,
         performer: performerForm.value
     }
     const filteredPerformance = filterObject(performance)
@@ -177,18 +177,16 @@ addPiece.addEventListener('click', () => {
         const filteredMovements = filterObject(movementValues)
         movementsArray = [...movementsArray, filteredMovements]
     }
-    movementsArray = filterObject(movementsArray)
+    if (movementsArray.length === 1 && Object.keys(movementsArray[0]).length === 0) {
+        movementsArray = '';
+    }
 
     const unicodeKey = key.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>')
 
-    const aboutValues = {
-        background: background.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-        analysis: analysis.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-        culture: culture.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-        reception: reception.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-        wiki: wikiLink.value
-    }
-    const about = filterObject(aboutValues)
+    const backgroundValue = background.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
+    const analysisValue = analysis.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
+    const cultureValue = culture.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
+    const receptionValue = reception.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
 
     const data = {
         piece: piece.value,
@@ -196,7 +194,11 @@ addPiece.addEventListener('click', () => {
         opus: opusForm.value,
         year: year.value,
         key: unicodeKey,
-        about: about,
+        background: backgroundValue,
+        analysis: analysisValue,
+        culture: cultureValue,
+        reception: receptionValue,
+        wiki: wiki.value,
         movements: movementsArray,
         genre: genre,
         style: style,
@@ -253,7 +255,7 @@ const searchResults = async() => {
         for (let i=0; i < 5; i++ ) {
             if (results.pieces[i]) {
                 const piece = document.createElement('a')
-                piece.innerHTML = results.pieces[i].piece
+                piece.innerHTML = `${results.pieces[i].piece} (<em>${results.pieces[i].composer.first_name} ${results.pieces[i].composer.last_name}</em>)`
                 piece.href = `../html/piece.html?id=${results.pieces[i]._id}`
                 dropdownContent.appendChild(piece)
             }

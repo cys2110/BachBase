@@ -57,7 +57,7 @@ const searchResults = async() => {
         for (let i=0; i < 5; i++ ) {
             if (results.pieces[i]) {
                 const piece = document.createElement('a')
-                piece.innerHTML = results.pieces[i].piece
+                piece.innerHTML = `${results.pieces[i].piece} (<em>${results.pieces[i].composer.first_name} ${results.pieces[i].composer.last_name}</em>)`
                 piece.href = `../html/piece.html?id=${results.pieces[i]._id}`
                 dropdownContent.appendChild(piece)
             }

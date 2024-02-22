@@ -5,7 +5,7 @@ const universalSearch = async(req, res) => {
         const {search} = req.params
         const regex = new RegExp(search, 'i')
         const composers = await Composer.find({$or: [{first_name: {$regex: regex}}, {last_name: {$regex: regex}}]}).collation({locale: 'en_US', strength: 1})
-        const pieces = await Piece.find({$or: [{piece: {$regex: regex}}, {alias: {$regex: regex}}]})
+        const pieces = await Piece.find({$or: [{piece: {$regex: regex}}, {alias: {$regex: regex}}]}).populate({path: 'composer', select: ['first_name', 'last_name']})
         res.json({composers, pieces})
     } catch (error) {
         return res.status(500).send(error.message);
@@ -97,7 +97,11 @@ const createPiece = async(req, res) => {
             composer: composerId,
             performance: req.body.performance,
             sheet_music: req.body.sheet_music,
-            about: req.body.about,
+            'about.background': req.body.background,
+            'about.analysis': req.body.analysis,
+            'about.culture': req.body.culture,
+            'about.reception': req.body.reception,
+            'about.wiki': req.body.wiki,
             movements: req.body.movements,
             dedicatee: req.body.dedicatee,
             publication: req.body.publication,
@@ -133,7 +137,7 @@ const editPiece = async(req, res) => {
             const composer = await Composer.find({first_name: {$regex: composerFirstName}, last_name: {$regex: composerLastName}}).collation({locale: 'en_US', strength: 1})
             composerId = composer._id
         }
-        const piece = await Piece.findByIdAndUpdate(id, {
+        let updateFields = {
             piece: req.body.piece,
             alias: req.body.alias,
             opus: req.body.opus,
@@ -150,11 +154,15 @@ const editPiece = async(req, res) => {
             'about.culture': req.body.culture,
             'about.reception': req.body.reception,
             'about.wiki': req.body.wiki,
-            movements: req.body.movements,
             dedicatee: req.body.dedicatee,
             publication: req.body.publication,
             tempo: req.body.tempo
-        })
+        }
+
+        if(req.body.movements && req.body.movements.length > 0) {
+            updateFields.movements = req.body.movements
+        }
+        const piece = await Piece.findByIdAndUpdate(id, updateFields)
         if (req.body.instrumentation) {
             for (let i=0; i<req.body.instrumentation.length; i++) {
                 const instrument = await Instrument.find({_id: req.body.instrumentation[i], pieces: id})

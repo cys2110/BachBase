@@ -64,6 +64,7 @@ body {
 a {
     color: rgb(3, 124, 171);
     text-decoration: none;
+    cursor: pointer;
 }
 
 .dropdown-content {
@@ -81,6 +82,10 @@ a {
     background-color: rgb(198, 225, 250);
     border: none;
     border-bottom: 1px solid rgb(52, 147, 236);
+}
+
+#search-bar:focus {
+    outline: none
 }
 
 .dropdown-content > p {
@@ -182,6 +187,10 @@ input {
     font-family: 'Sarabun';
 }
 
+textarea {
+    font-family: 'Sarabun';
+}
+
 label {
     margin-top: 1px;
     margin-bottom: 1px;
@@ -189,6 +198,10 @@ label {
 
 button {
     margin-top: 5px;
+}
+
+form {
+    font-size: 14px
 }
 
 #instrumentation {
@@ -396,4 +409,9 @@ iframe {
 
 .movement {
     border: none;
+}
+
+.movement legend {
+    text-align: center;
+    font-style: italic;
 }

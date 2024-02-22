@@ -1,5 +1,20 @@
 const {Schema} = require('mongoose')
 
+const movementSchema = new Schema({
+    movement_name: { type: String, required: false },
+    tempo: { type: String, required: false },
+    key: { type: String, required: false },
+    analysis: { type: String, required: false }
+})
+
+const aboutSchema = new Schema({
+    background: {type: [String], required: false},
+    analysis: {type: [String], required: false},
+    culture: {type: [String], required: false},
+    reception: {type: [String], required: false},
+    wiki: {type: [String], required: false}
+}, {_id: false})
+
 const Piece = new Schema(
     {
         piece: {type: String, required: true},
@@ -16,19 +31,8 @@ const Piece = new Schema(
             performer: {type: String, required: false}
         },
         sheet_music: {type: String, required: true},
-        about: {
-            background: {type: String, required: false},
-            analysis: {type: String, required: false},
-            culture: {type: String, required: false},
-            reception: {type: String, required: false},
-            wiki: {type: String, required: false}
-        },
-        movements: [{
-            movement_name: {type: String, required: false},
-            tempo: {type: String, required: false},
-            key: {type: String, required: false},
-            analysis: {type: String, required: false}
-        }],
+        about: aboutSchema,
+        movements: {type: [movementSchema], required: false},
         dedicatee: {type: String, required: false},
         publication: {type: Number, required: false},
         tempo: {type: String, required: false}

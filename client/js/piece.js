@@ -134,38 +134,51 @@ const details = async() => {
             }
         }
     }
+    let filteredAbout
     if (response.about) {
+        filteredAbout = filterObject(response.about)
+    }
+    if (response.about && Object.keys(filteredAbout).length > 0) {
         aboutSection.style.display = ''
         aboutDl.style.display = ''
-        if (response.about.background) {
+        if (filteredAbout.background) {
             const aboutHeading = aboutDl.appendChild(document.createElement('dt'))
             aboutHeading.innerHTML = 'Background'
-            const about = aboutDl.appendChild(document.createElement('dd'))
-            about.innerHTML = response.about.background
+            for (let i=0; i<filteredAbout.background.length; i++) {
+                const about = aboutDl.appendChild(document.createElement('dd'))
+                about.innerHTML = filteredAbout.background[i]
+            }
         }
-        if (response.about.analysis) {
+        if (filteredAbout.analysis) {
             const aboutHeading = aboutDl.appendChild(document.createElement('dt'))
             aboutHeading.innerHTML = 'Analysis'
-            const about = aboutDl.appendChild(document.createElement('dd'))
-            about.innerHTML = response.about.analysis
+            for (let i=0; i<filteredAbout.analysis.length; i++) {
+                const about = aboutDl.appendChild(document.createElement('dd'))
+                about.innerHTML = filteredAbout.analysis[i]
+            }
         }
-        if (response.about.reception) {
+        if (filteredAbout.reception) {
             const aboutHeading = aboutDl.appendChild(document.createElement('dt'))
             aboutHeading.innerHTML = 'Reception'
-            const about = aboutDl.appendChild(document.createElement('dd'))
-            about.innerHTML = response.about.reception
+            for (let i=0; i<filteredAbout.reception.length; i++) {
+                const about = aboutDl.appendChild(document.createElement('dd'))
+                about.innerHTML = filteredAbout.reception[i]
+            }
         }
-        if (response.about.culture) {
+        if (filteredAbout.culture) {
             const aboutHeading = aboutDl.appendChild(document.createElement('dt'))
             aboutHeading.innerHTML = 'Cultural legacy'
-            const about = aboutDl.appendChild(document.createElement('dd'))
-            about.innerHTML = response.about.culture
+            for (let i=0; i<filteredAbout.culture.length; i++) {
+                const about = aboutDl.appendChild(document.createElement('dd'))
+                about.innerHTML = filteredAbout.culture[i]
+            }
         }
-        if (response.about.wiki) {
+        if (filteredAbout.wiki) {
             const wikiLink = document.createElement('a')
-            wikiLink.href = response.about.wiki
+            wikiLink.href = filteredAbout.wiki
             wikiLink.innerHTML = 'Read more'
             wikiLink.setAttribute('class', 'wiki')
+            wikiLink.target = '_blank'
             aboutDl.after(wikiLink)
         }
     }
@@ -209,6 +222,7 @@ const filterObject = (data) => {
         if (
             value == null ||
             value === "" ||
+            (Array.isArray(value) && value.every(item => item === "")) ||
             (Array.isArray(value) && value.length === 0) ||
             (typeof value === 'object' && Object.keys(value).length === 0)
         ) {
@@ -225,7 +239,7 @@ addMovement.addEventListener('click', () => {
     const nextId = movements.length + 1
     additional.id = `movement${nextId}`
     additional.querySelector('legend').innerHTML = `Movement/Section ${nextId}`
-    movementsFieldset.appendChild(additional)
+    movementsFieldset.insertBefore(additional, addMovement)
 })
 
 // selected instrumentation checkboxes
@@ -258,10 +272,11 @@ editButton.addEventListener('click', () => {
 
     let filteredPerformance
 
+    const embedLink = performanceLink.value.replaceAll('watch?v=', 'embed/')
     const performanceObject = {
-            link: performanceLink.value,
-            performer: performerForm.value
-        }
+        link: embedLink,
+        performer: performerForm.value
+    }
     filteredPerformance = filterObject(performanceObject)
     
     let unicodeKey
@@ -276,8 +291,7 @@ editButton.addEventListener('click', () => {
             movement_name: movements[i].querySelector('#name').value,
             tempo: movements[i].querySelector('#movement-tempo').value,
             key: movements[i].querySelector('#movement-key').value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-            analysis: movements[i].querySelector('#movement-analysis').value,
-            wiki: wiki.value
+            analysis: movements[i].querySelector('#movement-analysis').value
         }
         const filteredMovements = filterObject(movementValues)
         movementsArray = [...movementsArray, filteredMovements]
@@ -286,10 +300,10 @@ editButton.addEventListener('click', () => {
         movementsArray = '';
     }
 
-    backgroundValue = background.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-    analysisValue = analysis.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-    cultureValue = culture.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>'),
-    receptionValue = reception.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>')
+    const backgroundValue = background.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
+    const analysisValue = analysis.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
+    const cultureValue = culture.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
+    const receptionValue = reception.value.replaceAll('-flat', '<sup>&#9837;</sup>').replaceAll('-sharp', '<sup>&#9839;</sup>').split('\n')
 
     const data = {
         piece: piece.value,
@@ -357,7 +371,7 @@ const searchResults = async() => {
         for (let i=0; i < 5; i++ ) {
             if (results.pieces[i]) {
                 const piece = document.createElement('a')
-                piece.innerHTML = results.pieces[i].piece
+                piece.innerHTML = `${results.pieces[i].piece} (<em>${results.pieces[i].composer.first_name} ${results.pieces[i].composer.last_name}</em>)`
                 piece.href = `../html/piece.html?id=${results.pieces[i]._id}`
                 dropdownContent.appendChild(piece)
             }
