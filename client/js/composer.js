@@ -82,7 +82,7 @@ const details = async() => {
         const bioHeading = detail.appendChild(document.createElement('dt'))
         bioHeading.innerHTML = 'Biography'
         const bio = detail.appendChild(document.createElement('dd'))
-        bio.innerHTML = `${response.biography}<br><a href="${response.bio_link}" target="_blank">Read more</a>`
+        bio.innerHTML = `${response.biography}<br><a href="${response.bio_link}" target="_blank" class="wiki">Read more</a>`
     }
     const piecesCall = await axios.get(`http://localhost:3001/pieces/composer/${id}`)
     const piecesResponse = piecesCall.data

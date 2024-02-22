@@ -36,7 +36,7 @@
     <div id="add-section">
         <div id="composer-section">
             <h3>Add a composer</h3>
-            <form>
+            <form id="composer-form">
                 <div class="form-field">
                     <label for="first-name">First Name:</label>
                     <input type="text" id="first-name" required>
@@ -89,7 +89,7 @@
         </div>
         <div id="piece-section">
             <h3>Add a piece</h3>
-            <form>
+            <form id="piece-form">
                 <div class="form-field">
                     <label for="piece">Piece Name:</label>
                     <input type="text" id="piece">
@@ -97,6 +97,19 @@
                 <div class="form-field">
                     <label for="alias">Alternate Name:</label>
                     <input type="text" id="alias">
+                </div>
+                <div class="form-field">
+                    <fieldset>
+                        <legend>Composer</legend>
+                        <div class="form-field">
+                            <label for="fname">First Name:</label>
+                            <input type="text" id="fname">
+                        </div>
+                        <div class="form-field">
+                            <label for="lname">Last Name:</label>
+                            <input type="text" id="lname">
+                        </div>
+                    </fieldset>
                 </div>
                 <div class="form-field">
                     <label for="opus">Catalogue No.:</label>
@@ -111,12 +124,8 @@
                     <input type="text" id="key">
                 </div>
                 <div class="form-field">
-                    <label for="movements">Movements/Sections:</label>
-                    <input type="text" id="movements">
-                </div>
-                <div class="form-field">
-                    <label for="about">Description:</label>
-                    <textarea name="about" id="about" rows="4" cols="30"></textarea>
+                    <label for="tempo">Tempo:</label>
+                    <input type="text" id="tempo">
                 </div>
                 <div class="form-field">
                     <label for="style">Style:</label>
@@ -136,6 +145,64 @@
                         <option value="Traditional (folk) style">Traditional (folk)</option>
                         <option value="Traditional">Traditional</option>
                     </select>
+                </div>
+                <div class="form-field">
+                    <label for="dedicatee">Dedicatee:</label>
+                    <input type="text" id="dedicatee">
+                </div>
+                <div class="form-field">
+                    <label for="publication">Published:</label>
+                    <input type="number" id="publication">
+                </div>
+                <div class="form-field">
+                    <fieldset id="movements">
+                        <button type="button" id="add-movement">Add another movement/section</button>
+                        <legend>Movements/Sections</legend>
+                        <fieldset id="movement1" class="movement">
+                            <legend>Movement/Section 1:</legend>
+                            <div class="form-field">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name">
+                            </div>
+                            <div class="form-field">
+                                <label for="tempo">Tempo:</label>
+                                <input type="text" id="tempo">
+                            </div>
+                            <div class="form-field">
+                                <label for="key">Key:</label>
+                                <input type="text" id="key">
+                            </div>
+                            <div class="form-field">
+                                <label for="movement-analysis">Analysis:</label>
+                                <textarea name="movement-analysis" id="movement-analysis" rows="4" cols="30"></textarea>
+                            </div>
+                        </fieldset>
+                    </fieldset>
+                </div>
+                <div class="form-field">
+                    <fieldset id="about">
+                        <legend>About</legend>
+                        <div class="form-field">
+                            <label for="wiki">Link to Wikipedia page:</label>
+                            <input type="url" id="wiki">
+                        </div>
+                        <div class="form-field">
+                            <label for="background">Background:</label>
+                            <textarea name="background" id="background" rows="6" cols="30"></textarea>
+                        </div>
+                        <div class="form-field">
+                            <label for="analysis">Musical Analysis:</label>
+                            <textarea name="analysis" id="analysis" rows="4" cols="30"></textarea>
+                        </div>
+                        <div class="form-field">
+                            <label for="culture">Cultural Legacy:</label>
+                            <textarea name="culture" id="culture" rows="4" cols="30"></textarea>
+                        </div>
+                        <div class="form-field">
+                            <label for="reception">Reception:</label>
+                            <textarea name="reception" id="reception" rows="4" cols="30"></textarea>
+                        </div>
+                    </fieldset>
                 </div>
                 <div class="form-field">
                     <fieldset id="instrumentation">
@@ -364,6 +431,7 @@
                         <label for="Communion"><input type="checkbox" id="Communion" value="Communion" class="genre">Communion</label>
                         <label for="Concertante"><input type="checkbox" id="Concertante" value="Concertante" class="genre">Concertante</label>
                         <label for="Concertino"><input type="checkbox" id="Concertino" value="Concertino" class="genre">Concertino</label>
+                        <label for="Concerto"><input type="checkbox" id="Concerto" value="Concerto" class="genre">Concerto</label>
                         <label for="Conductus"><input type="checkbox" id="Conductus" value="Conductus" class="genre">Conductus</label>
                         <label for="Conga"><input type="checkbox" id="Conga" value="Conga" class="genre">Conga</label>
                         <label for="Correspondence"><input type="checkbox" id="Correspondence" value="Correspondence" class="genre">Correspondence</label>
@@ -572,7 +640,7 @@
                         <label for="Tonadilla"><input type="checkbox" id="Tonadilla" value="Tonadilla" class="genre">Tonadilla</label>
                         <label for="Trio"><input type="checkbox" id="Trio" value="Trio" class="genre">Trio</label>
                         <label for="Tyrolienne"><input type="checkbox" id="Tyrolienne" value="Tyrolienne" class="genre">Tyrolienne</label>
-                        <label for="Variation"><input type="checkbox" id="Variation" value="Variation" class="genre">Variation</label>
+                        <label for="Variations"><input type="checkbox" id="Variations" value="Variations" class="genre">Variations</label>
                         <label for="Varnam"><input type="checkbox" id="Varnam" value="Varnam" class="genre">Varnam</label>
                         <label for="Vaudeville"><input type="checkbox" id="Vaudeville" value="Vaudeville" class="genre">Vaudeville</label>
                         <label for="Verset"><input type="checkbox" id="Verset" value="Verset" class="genre">Verset</label>
@@ -589,19 +657,6 @@
                         <label for="Zarzuela"><input type="checkbox" id="Zarzuela" value="Zarzuela" class="genre">Zarzuela</label>
                         <label for="Zortzico"><input type="checkbox" id="Zortzico" value="Zortzico" class="genre">Zortzico</label>
                         <label for="Zweifacher"><input type="checkbox" id="Zweifacher" value="Zweifacher" class="genre">Zweifacher</label>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="form-field">
-                    <fieldset>
-                        <legend>Composer:</legend>
-                        <div class="form-field">
-                            <label for="fname">First Name:</label>
-                            <input type="text" id="fname">
-                        </div>
-                        <div class="form-field">
-                            <label for="lname">Last Name:</label>
-                            <input type="text" id="lname">
                         </div>
                     </fieldset>
                 </div>

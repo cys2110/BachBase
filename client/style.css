@@ -77,9 +77,10 @@ a {
     font-size: large;
     text-align: center;
     margin-bottom: 0;
-    width: inherit;
-    font-size: 16px;
-    border: none
+    width: 101%;
+    background-color: rgb(198, 225, 250);
+    border: none;
+    border-bottom: 1px solid rgb(52, 147, 236);
 }
 
 .dropdown-content > p {
@@ -89,13 +90,12 @@ a {
 }
 
 .dropdown-content > p, .dropdown-content a {
-    border-left: 2px solid rgb(3, 124, 171);
-    border-right: 2px solid rgb(3, 124, 171);
+    border-left: -2px solid rgb(3, 124, 171);
+    border-right: -2px solid rgb(3, 124, 171);
     margin-top: 0;
     margin-bottom: 0;
     padding: 5px;
-    width: 99%;
-    
+    width: 100%;
 }
 
 .dropdown-content a, .sidebar a, .piece-sidebar a {
@@ -107,7 +107,7 @@ a {
       linear-gradient(to right, rgb(3, 124, 171), rgb(3, 124, 171)),
       linear-gradient(to right, rgb(106, 185, 238), rgb(106, 185, 238));
     background-size: 100% 2px, 0 2px;
-    background-position: 100% 100%, 0 100%;
+    background-position: 50% 100%, 50% 100%;
     background-repeat: no-repeat;
     transition: background-size 1000ms;
     background-color: rgb(198, 225, 250);
@@ -262,7 +262,7 @@ details > ul > li {
     list-style-type: none;
 }
 
-details a, .composers a, #pieces a {
+details a, .composers a, #pieces a, .wiki {
     display: inline-block;
     position: relative;
     text-decoration: none;
@@ -271,17 +271,17 @@ details a, .composers a, #pieces a {
       linear-gradient(to right, rgb(3, 124, 171), rgb(3, 124, 171)),
       linear-gradient(to right, rgb(106, 185, 238), rgb(106, 185, 238));
     background-size: 100% 1.5px, 0 1.5px;
-    background-position: 100% 100%, 0 100%;
+    background-position: 50% 100%, 50% 100%;
     background-repeat: no-repeat;
     transition: background-size 1500ms;
   }
   
-details a:hover, .composers a:hover, #pieces a:hover,
-details a:focus, .composers a:focus, #pieces a:focus {
+details a:hover, .composers a:hover, #pieces a:hover, .wiki:hover,
+details a:focus, .composers a:focus, #pieces a:focus, .wiki:focus {
     background-size: 0 1.5px, 100% 1.5px;
   }
 
-  details[open] {
+details[open] ul {
     animation: animateDown 1s linear forwards;
   }
   
@@ -392,4 +392,8 @@ iframe {
     grid-template-columns: repeat(2, 1fr);
     font-size: 15px;
     text-align: left;
+}
+
+.movement {
+    border: none;
 }

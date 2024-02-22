@@ -16,8 +16,22 @@ const Piece = new Schema(
             performer: {type: String, required: false}
         },
         sheet_music: {type: String, required: true},
-        about: {type: String, required: false},
-        movements: [{type: String, required: false}]
+        about: {
+            background: {type: String, required: false},
+            analysis: {type: String, required: false},
+            culture: {type: String, required: false},
+            reception: {type: String, required: false},
+            wiki: {type: String, required: false}
+        },
+        movements: [{
+            movement_name: {type: String, required: false},
+            tempo: {type: String, required: false},
+            key: {type: String, required: false},
+            analysis: {type: String, required: false}
+        }],
+        dedicatee: {type: String, required: false},
+        publication: {type: Number, required: false},
+        tempo: {type: String, required: false}
     },
     {timestamps: true}
 )
