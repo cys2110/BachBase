@@ -349,6 +349,10 @@ editButton.addEventListener('click', () => {
     instruments.forEach((checkbox) => {
         checkbox.parentElement.style.display = 'block';
     })
+    const movementsFieldsets = document.querySelectorAll('.movement')
+    for (let i=1; i < movementsFieldsets.length; i++) {
+        movementsFieldsets[i].remove()
+    }
 })
 
 // search dropdown function adapted from ChatGPT
