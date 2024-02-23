@@ -9,6 +9,6 @@ BachBase provides easy access to classical sheet music.
 # User Stories
 
 - Users will be able to find composers by time period and pieces by composer and by instrumentation.
+- Users will be able to find out all about composers and pieces that they are interested in.
 - Users will be able add pieces and composers that are missing.
 - Users will be able to update information about composers and pieces which are incorrect.
-- Users will be able to delete composers and pieces which do not exist.

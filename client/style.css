@@ -415,3 +415,9 @@ iframe {
     text-align: center;
     font-style: italic;
 }
+
+@media screen and (max-width: 1090px) {
+    .instrument-grid, .genre-grid, .composer-form, .composers, #pieces, .types ~ details > ul {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

@@ -135,6 +135,7 @@ searchGenres.addEventListener('input', function() {
 
 // // select instrumentation checked boxes
 const getInstrumentation = () => {
+    instrumentation = []
     checkboxes.forEach(checkbox => {
         if (checkbox.checked) {
             instrumentation.push(checkbox.value)
@@ -144,6 +145,7 @@ const getInstrumentation = () => {
 
 // // select genre checked boxes
 const getGenre = () => {
+    genre = []
     genreForm.forEach(checkbox => {
         if (checkbox.checked) {
             genre.push(checkbox.value)
@@ -216,11 +218,17 @@ addPiece.addEventListener('click', () => {
 
     axios.post('http://localhost:3001/pieces', filteredData)
     .then(response => {
-        location.reload()
-        console.log('Response:', response.data)
+        console.log(response)
     })
     .catch(error => {
         console.log('Error:', error)
+    })
+    pieceForm.reset()
+    genres.forEach((checkbox) => {
+        checkbox.parentElement.style.display = 'block';
+    })
+    instruments.forEach((checkbox) => {
+        checkbox.parentElement.style.display = 'block';
     })
 })
 

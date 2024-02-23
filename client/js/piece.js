@@ -216,6 +216,11 @@ const movementsFieldset = document.querySelector('#movements')
 const dedicatee = document.querySelector('#dedicatee')
 const publication = document.querySelector('#publication')
 const tempo = document.querySelector('#tempo')
+const pieceForm = document.querySelector('form')
+const searchInstruments = document.getElementById('instrument-search')
+const instruments = document.querySelectorAll('#instrumentation input[type="checkbox"]')
+const searchGenres = document.getElementById('genre-search')
+const genres = document.querySelectorAll('#genre-fieldset input[type="checkbox"]')
 
 const filterObject = (data) => {
     return Object.fromEntries(Object.entries(data).filter(([_, value]) => {
@@ -332,11 +337,17 @@ editButton.addEventListener('click', () => {
 
     axios.patch(`http://localhost:3001/pieces/id/${id}`, filteredData)
     .then(response => {
-        location.reload()
         console.log('Response:', response.data)
     })
     .catch(error => {
         console.log('Error:', error)
+    })
+    pieceForm.reset()
+    genres.forEach((checkbox) => {
+        checkbox.parentElement.style.display = 'block';
+    })
+    instruments.forEach((checkbox) => {
+        checkbox.parentElement.style.display = 'block';
     })
 })
 
@@ -392,9 +403,6 @@ search.addEventListener('input', () => {
     }, delay)
 })
 
-const searchInstruments = document.getElementById('instrument-search')
-const instruments = document.querySelectorAll('#instrumentation input[type="checkbox"]')
-
 searchInstruments.addEventListener('input', function() {
     const search = searchInstruments.value.trim().toLowerCase();
     instruments.forEach((checkbox) => {
@@ -408,9 +416,6 @@ searchInstruments.addEventListener('input', function() {
 })
 
 // genre checkbox search
-const searchGenres = document.getElementById('genre-search')
-const genres = document.querySelectorAll('#genre-fieldset input[type="checkbox"]')
-
 searchGenres.addEventListener('input', function() {
     const search = searchGenres.value.trim().toLowerCase();
     genres.forEach((checkbox) => {
